@@ -1,0 +1,188 @@
+@font-face {
+    font-family: "OpenSans-Regular";
+    src: url("../fonts/OpenSans-Regular.ttf");
+
+    font-family: "OpenSans-BoldItalic.ttf";
+    src: url("../fonts/OpenSans-BoldItalic.ttf");
+
+}
+
+*  {
+    margin:0;
+    padding:0;
+}
+
+html{
+    position: relative;
+    min-height: 100%;
+
+}
+
+
+body{
+
+    color: #333333;
+    font-family: 'OpenSans-Regular', sans-serif;
+    font-size: 16px;
+    margin: 0 0 60px; /* altura do seu footer */
+    height:100%;
+
+}
+
+header{
+    background-color: #F7DC9E;
+}
+
+header img{
+    max-width:140px;
+    margin-top: -14px;
+}
+
+
+
+
+.conteudoHeader {
+
+    position: relative;
+    display: block;
+    height:105px;
+    padding: 10px 0;
+    width: auto;
+    color: #0404B4;
+    font-family: 'OpenSans-BoldItalic', sans-serif;
+    padding-left: 160px;
+}
+
+.conteudoHeader h1 {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 35px;
+    margin-bottom: 0;
+
+}
+
+.conteudoHeader p{
+
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 0;
+}
+
+
+
+.dadosLogin{
+    position: absolute;
+    top:0;
+    right: 0;
+    font-size: small;
+    padding-right: 0.5em;
+    text-transform: uppercase;
+    color:#0404B4;
+    margin: 17px 6px 0 0
+
+}
+
+.alinharTextoFooter{
+    vertical-align: middle;
+
+}
+
+
+#container { 
+    min-height:100%;
+    position:relative;
+    width:800px;
+    overflow:hidden;
+}
+
+footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    background-color: #F7DC9E;
+}
+#divBusca{
+
+    border:solid 1px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+    -webkit-border-top-left-radius:15px;
+    width:auto;
+    margin-top: 8px;
+    margin-left: 100px;
+}
+
+#txtBusca{
+    float:left;
+    background-color:transparent;
+    padding-left:5px;
+    font-style:italic;
+    font-size:18px;
+    border:none;
+    height:33px;
+    width:260px;
+}
+
+.container{
+    padding-top: 1%;
+}
+
+.nomeMaiusculoNegrito{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.imagemIcons{
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    width: 25px;
+    height: 25px;
+
+}
+
+.ng-invalid {
+    border-color: red;
+    outline-color: red;
+}
+
+.ng-valid {
+    border-color: green;
+    outline-color: green;
+}
+
+.messages {
+    font-size: smaller;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    color: red;
+}
+
+#load{
+    background-image: url('../img/ajax-loader.gif');
+    display: none;
+    text-indent: 40px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    width: 128px;
+    height: 128px;
+}
+
+.informacoes{
+    padding-top: 1px;
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+    color: inherit;
+    background-color: #eee;
+    padding-left: 29px;
+     
+}
+
+.botoesHistoricoUsuario{
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
