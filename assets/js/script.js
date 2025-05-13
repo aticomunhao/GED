@@ -18,18 +18,18 @@ $(document).ready(function () {
 
     $('#telefone').inputmask('(99) 9999[9]-9999');
 
-    $("body").tooltip({selector: '[data-toggle=tooltip]'});
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
     $(".informacoes").hide();
 
     $(function () {
         $('#selEstado').on('change', function () {
             var num = this.value;
-            var serviceBase = window.location.origin + '/ged/assets/js/app/api/v1';
+            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
 
             $.ajax({
                 type: 'GET',
                 url: serviceBase + '/cidades',
-                data: {estado: num, respostaAjax: true},
+                data: { estado: num, respostaAjax: true },
                 dataType: 'json',
                 beforeSend: function () {
                     $('#load').show();
@@ -60,12 +60,12 @@ $(document).ready(function () {
         $('#cpfcnpjRetirada').on('blur', function () {
 
             var num = limpa(this.value);
-            var serviceBase = window.location.origin + '/ged/assets/js/app/api/v1';
+            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
 
             $.ajax({
                 type: 'GET',
                 url: serviceBase + '/usuariocpf',
-                data: {cpf: num, respostaAjax: true},
+                data: { cpf: num, respostaAjax: true },
                 dataType: 'json',
                 beforeSend: function () {
                     $('#load').show();
@@ -78,7 +78,7 @@ $(document).ready(function () {
                             $('.erros').hide();
 
                             for (var prop in data) {
-                                var caminhoFigura = window.location.origin + '/ged/assets/img/plus.png';
+                                var caminhoFigura = window.location.origin + '/assets/img/plus.png';
 
 
                                 $('.informacoes').show().html("\
@@ -87,7 +87,7 @@ $(document).ready(function () {
                                     <strong>Nome: </strong>" + data[prop].nome + "<br>\n\
                                     <strong>Cidade/Estado: \n\
                                     </strong>  " + data[prop].nomeCidade + " - " + data[prop].sigla + "<br>\n\
-                                    </strong>Responsável:  " + data[prop].responsavel   + "<br>\n\
+                                    </strong>Responsável:  " + data[prop].responsavel + "<br>\n\
                                     <h3><strong> Histórico</strong>\
                                         <a\
                                         data-toggle='modal' data-target='#myModal'>\
@@ -169,12 +169,12 @@ $(document).ready(function () {
         $('#quantidadeR').on('blur', function () {
             var num = $('#selProduto').val();
             var qtd = $('#quantidadeR').val();
-            var serviceBase = window.location.origin + '/ged/assets/js/app/api/v1';
+            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
 
             $.ajax({
                 type: 'GET',
                 url: serviceBase + '/quantidade',
-                data: {id: num},
+                data: { id: num },
                 dataType: 'json',
                 beforeSend: function () {
                     $('#load').show();
@@ -221,13 +221,46 @@ $(document).ready(function () {
     doc.text(40, 20, 'GED - Gestão de Estoque e Distribuição');
     doc.text(80, 35, 'Comprovante');
 
+    // $('#btGerarPDF').click(function () {
+    //     doc.fromHTML($('#dadosImpressao').html(), 40, 40, {
+    //         'width': 200,
+    //         'elementHandlers': specialElementHandlers
+    //     });
+    //     doc.output('dataurlnewwindow');
+    // });
+
     $('#btGerarPDF').click(function () {
-        doc.fromHTML($('#dadosImpressao').html(), 40, 40, {
-            'width': 200,
-            'elementHandlers': specialElementHandlers
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const element = document.getElementById('dadosImpressao');
+
+        html2canvas(element).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgProps = doc.getImageProperties(imgData);
+
+            // Dimensões da página e margens
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = doc.internal.pageSize.getHeight();
+            const marginLeft = 20;
+            const marginTop = 40; // espaço extra para o título
+            const marginRight = 20;
+
+            const usableWidth = pdfWidth - marginLeft - marginRight;
+            const imgHeight = (imgProps.height * usableWidth) / imgProps.width;
+
+            // Adiciona o título antes da imagem
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('COMPROVANTE DE RETIRADA', pdfWidth / 2, 20, { align: 'center' });
+
+            // Adiciona a imagem abaixo do título
+            doc.addImage(imgData, 'PNG', marginLeft, marginTop, usableWidth, imgHeight);
+
+            doc.output('dataurlnewwindow'); // Abre nova aba
+            // doc.save('comprovante.pdf'); // Ou salvar como arquivo
         });
-        doc.output('dataurlnewwindow');
     });
+
 
     $('#btGerarPDFHistorico').click(function () {
 
@@ -264,9 +297,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -309,9 +342,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -355,9 +388,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -400,9 +433,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -446,9 +479,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -491,9 +524,9 @@ $(document).ready(function () {
             source, // HTML string or DOM elem ref.
             margins.left, // x coord
             margins.top, {// y coord
-                'width': margins.width, // max width of content on PDF
-                'elementHandlers': specialElementHandlers
-            },
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
             function (dispose) {
                 // dispose: object with X, Y of the last line add to the PDF
                 //          this allow the insertion of new lines after html
@@ -502,4 +535,3 @@ $(document).ready(function () {
     });
 });
 
- 

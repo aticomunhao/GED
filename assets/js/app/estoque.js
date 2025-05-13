@@ -27,7 +27,7 @@
         function ($scope, $http, $timeout) {
 
 
-            var serviceBase = window.location.origin + '/ged/assets/js/app/api/v1';
+            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
             $http.get(serviceBase + '/estoque').then(function (results) {
                 $scope.list = results.data;
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
@@ -67,39 +67,39 @@
                 }
                 $http({
                     method: 'POST',
-                    url: window.location.origin + '/ged/estoque/deletar',
+                    url: window.location.origin + '/estoque/deletar',
                     data: "estoque=" + JSON.stringify(estoque),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).
-                success(function (data, status, headers, config) {
+                    success(function (data, status, headers, config) {
                         console.log(data);
-                    if (data.error) {
-                        $scope.error = data.message;
-                    } else {
+                        if (data.error) {
+                            $scope.error = data.message;
+                        } else {
 
-                        for (var i = 0; i < $scope.list.length; i++) {
+                            for (var i = 0; i < $scope.list.length; i++) {
 
-                            if ($scope.list[i].id == data.id) {
+                                if ($scope.list[i].id == data.id) {
 
-                                $scope.list.splice(i, 1);
+                                    $scope.list.splice(i, 1);
+                                }
                             }
+                            $scope.success = "Exclusão Efetuada";
+
                         }
-                        $scope.success = "Exclusão Efetuada";
-
-                    }
 
 
-                }).
-                error(function (data, status, headers, config) {
+                    }).
+                    error(function (data, status, headers, config) {
 
-                });
+                    });
             };
 
 
-           
+
 
         }]
 
 
-            );
+    );
 })(angular)

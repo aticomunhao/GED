@@ -1,29 +1,29 @@
 <div class="container">
 
-    <div  ng-controller="produtoCtl">
+    <div ng-controller="produtoCtl">
 
         <?php if ($this->session->flashdata('erro')): ?>
-            <div class="alert alert-danger text-center" role="alert" ><?= $this->session->flashdata('erro'); ?></div>
-            <?php
+            <div class="alert alert-danger text-center" role="alert"><?= $this->session->flashdata('erro'); ?></div>
+        <?php
         endif;
         if ($this->session->flashdata('acerto')):
-            ?>
-            <div class="alert alert-success text-center" role="alert" ><?= $this->session->flashdata('acerto'); ?></div>
+        ?>
+            <div class="alert alert-success text-center" role="alert"><?= $this->session->flashdata('acerto'); ?></div>
         <?php endif; ?>
-            
-            
+
+
         <div class="pull-right">
 
             <?php if ($this->session->userdata('tipoVoluntario') == 1) { ?>
                 <a href="<?= base_url('produto/inserir'); ?>" class="btn btn-primary botaoNovoTelaUsuario"> <span class="glyphicon glyphicon-plus"></span> NOVO</a>
 
-                <?php
+            <?php
             }
             ?>
         </div>
 
 
-  <h2> Relação de Produtos </h2>  <br>
+        <h2> Relação de Produtos </h2> <br>
         <div ng-show="listar">
             <div class="row">
                 <div class="col-md-2">Exibir:
@@ -36,19 +36,21 @@
                     </select>
                 </div>
                 <div class="col-md-3">Filtro:
-                    <input type="text"  ng-model="search" ng-change="filter()" placeholder="Filtrar" class="form-control" />
+                    <input type="text" ng-model="search" ng-change="filter()" placeholder="Filtrar" class="form-control" />
                 </div>
                 <div class="col-md-4" ng-show="!search">
                     <h5> {{ totalItems}} produtos(s) cadastrado(s) </h5>
                 </div>
                 <div class="col-md-4" ng-show="search">
-                    <h5>Filtrados {{ filtered.length}} de {{ totalItems}} produto(s)</h5>
+                    <h5 ng-if="filtered && filtered.length !== undefined">Filtrados {{ filtered.length }} de {{ totalItems }} produto(s)</h5>
                 </div>
             </div>
 
-            <br/>
-            <div class="alert alert-danger text-center" ng-if="error" role="alert" >{{error}}</div>
-            <div class="alert alert-success text-center" ng-if="success" role="alert" >{{success}}</div>
+            <br />
+            <div ng-show="list.length > 0">
+                <div class="alert alert-danger text-center" ng-if="error !== null && error.length > 0" role="alert">{{error}}</div>
+                <div class="alert alert-success text-center" ng-if="success !== null && success.length > 0" role="alert">{{success}}</div>
+            </div>
 
             <div class="row">
 
@@ -66,13 +68,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="produto in filtered = (list| filter:search | orderBy : predicate :reverse) | startFrom:(currentPage - 1) * entryLimit | limitTo:entryLimit" >
+                            <tr ng-repeat="produto in filtered = (list| filter:search | orderBy : predicate :reverse) | startFrom:(currentPage - 1) * entryLimit | limitTo:entryLimit">
 
-                                <td><a class="tooltipUsuario" 
-                                       href="<?= base_url('produto/editar') ?>/{{produto.id}}"
-                                       data-toggle="tooltip" 
-                                       data-placement="top" 
-                                       data-original-title="{{produto.nome}}">
+                                <td><a class="tooltipUsuario"
+                                        href="<?= base_url('produto/editar') ?>/{{produto.id}}"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        data-original-title="{{produto.nome}}">
                                         {{produto.nome.toUpperCase()}}
                                     </a>
                                 </td>
@@ -83,8 +85,8 @@
                                 <td class="hidden-xs">{{produto.maximo}}</td>
 
                                 <td>
-                                    <a href="<?= base_url('produto/editar') ?>/{{produto.id}}" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><img class="imagemIcons" src="<?= base_url('assets/img/document_edit.png') ?>"</a>
-                                    <a href="#" ng-click="deletarProduto(produto)" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Excluir"><img class="imagemIcons" src="<?= base_url('assets/img/recyclebin.png') ?>"</a>
+                                    <a href="<?= base_url('produto/editar') ?>/{{produto.id}}" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><img class="imagemIcons" src="<?= base_url('assets/img/document_edit.png') ?>" </a>
+                                        <a href="#" ng-click="deletarProduto(produto)" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Excluir"><img class="imagemIcons" src="<?= base_url('assets/img/recyclebin.png') ?>" </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -95,7 +97,7 @@
                         <h4>Nenhum produto encontrado</h4>
                     </div>
                 </div>
-                <div class="col-md-12" ng-show="filteredItems > 0">    
+                <div class="col-md-12" ng-show="filteredItems > 0">
                     <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
 
                 </div>
@@ -105,8 +107,7 @@
 
 
     </div><!-- fim controller -->
-    
-      
 
-</div> 
- 
+
+
+</div>

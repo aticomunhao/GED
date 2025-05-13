@@ -1,6 +1,12 @@
-<IfModule authz_core_module>
-    Require all denied
-</IfModule>
-<IfModule !authz_core_module>
-    Deny from all
-</IfModule>
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    <Directory "/var/www/html">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    # Habilitar rewrite
+    RewriteEngine On
+    RewriteRule ^(.*)$ /index.php [QSA,L]
+</VirtualHost>

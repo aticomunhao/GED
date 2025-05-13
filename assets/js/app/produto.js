@@ -25,20 +25,22 @@
         '$http',
         '$timeout',
         function ($scope, $http, $timeout) {
-          
- 
-            var serviceBase = window.location.origin + '/ged/assets/js/app/api/v1';
+
+            $scope.error = null;
+            $scope.success = null;
+            const serviceBase = window.location.origin + '/assets/js/app/api/v1';
             $http.get(serviceBase + '/produtos').then(function (results) {
                 $scope.list = results.data;
+                $scope.filtered = [];
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
-            $scope.totalItems = $scope.list.length;
-                
+                $scope.totalItems = $scope.list.length;
+
             });
 
-           
+
             $scope.currentPage = 1; //current page
             $scope.entryLimit = 20; //max no of items to display in a page
-            
+
 
             $scope.listar = true;
 
@@ -48,7 +50,7 @@
             };
             $scope.filter = function () {
                 $timeout(function () {
-                    $scope.filteredItems = $scope.filtered.length;
+                    $scope.filteredItems = ($scope.filtered || []).length;
                 }, 10);
             };
             $scope.sort_by = function (predicate) {
@@ -65,35 +67,35 @@
                 }
                 $http({
                     method: 'POST',
-                    url: window.location.origin + '/ged/produto/deletar',
+                    url: window.location.origin + '/produto/deletar',
                     data: "produto=" + JSON.stringify(produto),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).
-                        success(function (data, status, headers, config) {
+                    success(function (data, status, headers, config) {
 
-                            if (data.error) {
-                                $scope.error = data.message;
-                            } else {
+                        if (data.error) {
+                            $scope.error = data.message;
+                        } else {
 
-                                for (var i = 0; i < $scope.list.length; i++) {
+                            for (var i = 0; i < $scope.list.length; i++) {
 
-                                    if ($scope.list[i].id == data.id) {
+                                if ($scope.list[i].id == data.id) {
 
-                                        $scope.list.splice(i, 1);
-                                    }
+                                    $scope.list.splice(i, 1);
                                 }
-                                $scope.success = "Exclusão Efetuada";
-
                             }
+                            $scope.success = "Exclusão Efetuada";
+
+                        }
 
 
-                        }).
-                        error(function (data, status, headers, config) {
+                    }).
+                    error(function (data, status, headers, config) {
 
-                        });
+                    });
             };
         }]
 
 
-            );
+    );
 })(angular)

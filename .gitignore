@@ -1,0 +1,45 @@
+# CodeIgniter: Ignorar diretórios padrão de cache e logs
+/application/cache/*
+/application/logs/*
+
+# Manter os diretórios com .gitkeep, se necessário
+!/application/cache/.gitkeep
+!/application/logs/.gitkeep
+
+# Composer
+/vendor/
+composer.lock
+
+# Ambientes e configs locais
+.env
+*.env
+*.local
+
+# Docker
+docker-compose.override.yml
+docker-compose.local.yml
+docker.env
+.docker/mysql/*.sql
+
+# Backups, dumps de banco etc
+*.sql
+*.tar
+*.gz
+*.zip
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos temporários ou de lock
+*.log
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

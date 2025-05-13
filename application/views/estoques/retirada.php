@@ -5,7 +5,7 @@
             <legend>Retirada de Mercadoria - Pessoa Física</legend>
 
             <?php if ($this->session->flashdata('erro')): ?>
-                <div class="alert alert-danger text-center" role="alert" ><?= $this->session->flashdata('erro'); ?></div>
+                <div class="alert alert-danger text-center" role="alert"><?= $this->session->flashdata('erro'); ?></div>
             <?php endif;
             ?>
 
@@ -17,18 +17,18 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
-                                <label for = "cpfcnpjRetirada">CPF/CNPJ do Usuário</label>
-                                <input id="cpfcnpjRetirada" name ="cpfcnpjRetirada" MAXLENGTH="18"  onkeypress="mascaraMutuario(this,cpfCnpj)"  onblur="mascaraMutuario(this,cpfCnpj)" class = "form-control" required type ="text" value= "<?= set_value('cpfcnpjRetirada'); ?>">
+                                <label for="cpfcnpjRetirada">CPF/CNPJ do Usuário</label>
+                                <input id="cpfcnpjRetirada" name="cpfcnpjRetirada" MAXLENGTH="18" onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)" class="form-control" required type="text" value="<?= set_value('cpfcnpjRetirada'); ?>">
                                 <?= form_error('cpfcnpjRetirada'); ?>
                             </div>
-							
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
 
-                                <label for = "selProduto">Produto</label>
+                                <label for="selProduto">Produto</label>
 
                                 <select class="form-control" id="selProduto" name="selProduto">
                                     <?php foreach ($produtos->result() as $row): ?>
@@ -45,8 +45,8 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
-                                <label for = "quantidadeR">Quantidade</label>
-                                <input id = "quantidadeR" name = "quantidadeR" class = "form-control" required type = "number" value = "<?= set_value('quantidadeR') ?>">
+                                <label for="quantidadeR">Quantidade</label>
+                                <input id="quantidadeR" name="quantidadeR" class="form-control" required type="number" value="<?= set_value('quantidadeR') ?>">
                                 <?= form_error('quantidade'); ?>
                                 <span class="messages" id="alertaQuantidade"></span>
 
@@ -58,8 +58,8 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-                                <label for = "obs">Observações: </label>
-                                <textarea  rows="3"  id="obs" name = "obs" class = "form-control"  title = "Preenchimento opicional" x-moz-errormessage = "Preenchimento opicional" ><?= set_value('obs') ?> </textarea>
+                                <label for="obs">Observações: </label>
+                                <textarea rows="3" id="obs" name="obs" class="form-control" title="Preenchimento opicional" x-moz-errormessage="Preenchimento opicional"><?= set_value('obs') ?> </textarea>
                                 <?= form_error('obs');
                                 ?>
                             </div>
@@ -82,10 +82,6 @@
 
                 </div>
             </div>
-
-
-                <input type="hidden" id="identUsuario" name="identUsuario" > 
-
 
             <div class="pull-right">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>

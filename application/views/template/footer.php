@@ -1,11 +1,10 @@
-
-<script src="<?= base_url('assets/js/jquery.js') ?>" type="text/javascript"></script> 
+<script src="<?= base_url('assets/js/jquery.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/bootstrap.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/angular.js') ?> " type="text/javascript"></script>
 <script src="<?= base_url('assets/js/angular-messages.js') ?> " type="text/javascript"></script>
 
 
-  
+
 <script src="<?= base_url('assets/js/jquery.inputmask.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/jquery.mask.min.js') ?>" type="text/javascript"></script>
 
@@ -18,8 +17,8 @@
 <script src="<?= base_url('assets/js/ui-bootstrap-tpls-0.10.0.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/CPF.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/jspdf.min.js') ?>" type="text/javascript"></script>
-
-
+<script src="<?= base_url('assets/js/jspdf.umd.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/js/html2canvas.min.js') ?>" type="text/javascript"></script>
 
 
 
@@ -44,7 +43,7 @@
 <footer>
 
     <div class="text-center alinharTextoFooter ">
-        <span>Avenida L 2 Sul, Quadra 604, lote 27 - Asa Sul, Brasília - DF, 70200-640  <strong>Telefone:</strong>(61) 3048-1801</span> 
+        <span>Avenida L 2 Sul, Quadra 604, lote 27 - Asa Sul, Brasília - DF, 70200-640 <strong>Telefone:</strong>(61) 3048-1801</span>
 
     </div>
 
@@ -52,4 +51,5 @@
 </footer>
 
 </body>
+
 </html>
