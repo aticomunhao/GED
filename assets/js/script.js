@@ -60,7 +60,7 @@ $(document).ready(function () {
         $('#cpfcnpjRetirada').on('blur', function () {
 
             var num = limpa(this.value);
-            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
+            var serviceBase = '/assets/js/app/api/v1';
 
             $.ajax({
                 type: 'GET',
@@ -78,8 +78,9 @@ $(document).ready(function () {
                             $('.erros').hide();
 
                             for (var prop in data) {
-                                var caminhoFigura = window.location.origin + '/assets/img/plus.png';
+                                var caminhoFigura = '/assets/img/plus.png';
 
+                                const dataRetiradaFormatada = moment(data[prop].dataRetirada,'DD/MM/YYYY HH:mm:ss')
 
                                 $('.informacoes').show().html("\
                                 <h2>\
@@ -95,7 +96,7 @@ $(document).ready(function () {
                                     <strong>Última Retirada em: </strong>  " + data[prop].dataRetirada + " <br>\
                                     <strong>Qtde: </strong>  " + data[prop].qtde + " unidade(s) <br>\
                                     <strong>Produto: </strong>  " + data[prop].nomeProduto + " <br>\
-                                    <strong>Há  </strong>  " + data[prop].tempo + " dia(s) <br>");
+                                    <strong>Retirada:  </strong>  " + dataRetiradaFormatada.fromNow() + " <br>");
                                 var tabela = '' +
                                     '<table class="table">' +
                                     '<thead> ' +

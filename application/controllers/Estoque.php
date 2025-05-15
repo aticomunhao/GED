@@ -113,7 +113,7 @@ class Estoque extends CI_Controller
             $idProduto = $this->input->post('selProduto');
             $quantidade = $this->input->post('quantidadeR');
             $obs = $this->input->post('obs');
-            $idUsuario = $this->session->userdata('id');
+            $idUsuario = $this->input->post('identUsuario');
 
             $this->load->model('produto_model', 'produto');
             $quantidadeDisponivel = $this->estoque->checaQuantidadeProdutoDisponivel($idProduto);

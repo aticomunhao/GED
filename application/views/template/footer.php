@@ -9,7 +9,8 @@
 <script src="<?= base_url('assets/js/jquery.mask.min.js') ?>" type="text/javascript"></script>
 
 
-<script src="<?= base_url('assets/js/moment.js') ?> " type="text/javascript"></script>
+<script src="<?= base_url('assets/js/moments/moment.min.js') ?> " type="text/javascript"></script>
+<script src="<?= base_url('assets/js/moments/locale/pt-br.min.js') ?> " type="text/javascript"></script>
 
 <script src="<?= base_url('assets/js/bootstrap-datetimepicker.js') ?> " type="text/javascript"></script>
 
