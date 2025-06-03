@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://serv15:8585/ged';
+$config['base_url'] = 'http://pomada.comunhao.org';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ $config['index_page'] = 'index.php';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']    = 'REQUEST_URI';
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'portuguese-brazilian';
+$config['language']    = 'portuguese-brazilian';
 
 /*
 |--------------------------------------------------------------------------
@@ -390,11 +390,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_prefix']    = '';
+$config['cookie_domain']    = '';
+$config['cookie_path']        = '/';
+$config['cookie_secure']    = FALSE;
+$config['cookie_httponly']     = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -478,7 +478,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] =  'UM3'; #'local';
+$config['time_reference'] =  'local'; #'local';
 
 /*
 |--------------------------------------------------------------------------
@@ -513,16 +513,14 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
- 
+
 
 #$config['header_css'] = array('bootstrap.min.css','bootstrap-material-design.css',
- #                               'ripples.css', 'jquery.dropdown.css', 'style.css');
+#                               'ripples.css', 'jquery.dropdown.css', 'style.css');
 #$config['header_js']  = array('jquery.js','bootstrap.min.js', 'ripples.min.js',
 #        'material.js', 'jquery.dropdown.js', 'angular.js', 'jquery.inputmask.js', 'script.js');
 
-$config['header_css'] =array();
+$config['header_css'] = array();
 $config['header_js'] = array();
 $config['error_prefix'] = '<div class="error_prefix">';
 $config['error_suffix'] = '</div>';
-
- 

@@ -4,9 +4,11 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Estoque extends CI_Controller {
+class Estoque extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('login_model', 'login');
         $this->login->logged();
@@ -14,7 +16,8 @@ class Estoque extends CI_Controller {
         $this->load->model('mensagens_model', 'mensagens');
     }
 
-    public function listar() {
+    public function listar()
+    {
 
         $this->load->view('template/html.php');
         $this->load->view('template/header.php');
@@ -24,7 +27,8 @@ class Estoque extends CI_Controller {
         $this->load->view('template/footer.php');
     }
 
-    public function adicionar() {
+    public function adicionar()
+    {
 
         $config = array(
             array(
@@ -67,7 +71,8 @@ class Estoque extends CI_Controller {
         }
     }
 
-    public function retirada() {
+    public function retirada()
+    {
 
         $config = array(
             array(
@@ -102,7 +107,7 @@ class Estoque extends CI_Controller {
 
             $this->load->view('estoques/retirada.php', array('produtos' => $produtos));
 
-             $this->load->view('template/footer.php');
+            $this->load->view('template/footer.php');
         } else {
 
             $idProduto = $this->input->post('selProduto');
@@ -118,11 +123,11 @@ class Estoque extends CI_Controller {
                 $this->mensagens->defineMesagens($retorno);
                 redirect('sistema/inicio');
             } else {
-                
+
                 $this->load->model('datas_model', 'data');
                 $data_hora = $this->data->obterDateTime();
-                
-                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario,$data_hora);
+
+                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario, $data_hora);
                 $this->load->view('template/html.php');
                 $this->load->view('template/header.php');
                 $this->load->view('template/navbar.php');
@@ -133,22 +138,25 @@ class Estoque extends CI_Controller {
 
                 $nomeProduto = $this->produto->obterNome($idProduto);
                 $nomeUsuario = $this->usuario->obterNome($idUsuario);
-                
+
                 $dataImpressao = date_create($data_hora);
-                  
+
                 $this->mensagens->defineMesagens($retorno);
-                $this->load->view('estoques/comprovante.php', array("nomeUsuario" => $nomeUsuario,
+                $this->session->set_flashdata('comprovante', array(
+                    "nomeUsuario" => $nomeUsuario,
                     "nomeProduto" => $nomeProduto,
                     "quantidade" => $quantidade,
                     "data_hora" => date_format($dataImpressao, 'Y-m-d h:i:s'),
-                    "obs" => $obs)
-                );
-                $this->load->view('template/footer.php');
+                    "obs" => $obs
+                ));
+
+                redirect('estoque/comprovante');
             }
         }
     }
 
-    public function demonstrativo() {
+    public function demonstrativo()
+    {
         $this->load->view('template/html.php');
         $this->load->view('template/header.php');
         $this->load->view('template/navbar.php');
@@ -159,7 +167,8 @@ class Estoque extends CI_Controller {
         $this->load->view('template/footer.php');
     }
 
-    public function pesquisa() {
+    public function pesquisa()
+    {
 
 
         $config = array(
@@ -192,23 +201,24 @@ class Estoque extends CI_Controller {
                 "peridoInicial" => $this->input->post('peridoInicial'),
                 "peridoFinal" => $this->input->post('peridoFinal')
             );
-            
+
             $this->load->model('datas_model', 'datas');
             $dataFiltro = $this->datas->preparaCondicaoDatas($datas['peridoInicial'], $datas['peridoFinal'], ' data_saida');
             $query = $this->estoque->historicoRetiradas($dataFiltro);
             $this->load->model('usuario_model', 'usuario');
             $dados = $this->usuario->formataDadosHistorico($query);
- 
+
             $this->load->view('template/html.php');
             $this->load->view('template/header.php');
             $this->load->view('template/navbar.php');
             $this->load->view('template/principal.php');
-            $this->load->view('estoques/historico_retiradas.php',array("historico" => $dados));
+            $this->load->view('estoques/historico_retiradas.php', array("historico" => $dados));
             $this->load->view('template/footer.php');
         }
     }
 
-    public function deletar() {
+    public function deletar()
+    {
 
         try {
 
@@ -227,7 +237,7 @@ class Estoque extends CI_Controller {
             $data_hora = $this->data->obterDateTime();
             //Colocar no campo antes da variavel $data_hora, o número do usuario desativado do sistema
             //para os casos de remocao do item do estoqe por um adminitrador
-                $retorno = $this->estoque->inserirRetirada($valor->id, $valor->qtde, 'Excluído pelo Administrador(a) ' . strtoupper($this->session->userdata('nome')),/* SUBSTITUIR ESSE VALOR PELO ID DO USUARIO*/ 2,$data_hora,2);
+            $retorno = $this->estoque->inserirRetirada($valor->id, $valor->qtde, 'Excluído pelo Administrador(a) ' . strtoupper($this->session->userdata('nome')),/* SUBSTITUIR ESSE VALOR PELO ID DO USUARIO*/ 2, $data_hora, 2);
 
 
             if ($retorno) {
@@ -247,5 +257,21 @@ class Estoque extends CI_Controller {
             ), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
             die;
         }
+    }
+
+    public function comprovante()
+    {
+        $dados = $this->session->flashdata('comprovante');
+
+        if (!$dados) {
+            redirect('estoque/retirada');
+        }
+
+        $this->load->view('template/html.php');
+        $this->load->view('template/header.php');
+        $this->load->view('template/navbar.php');
+        $this->load->view('template/principal.php');
+        $this->load->view('estoques/comprovante.php', $dados);
+        $this->load->view('template/footer.php');
     }
 }
