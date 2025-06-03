@@ -83,6 +83,7 @@ $(document).ready(function () {
 
                                 $('.informacoes').show().html("\
                                 <h2>\
+                                <input name=\"id_usuario\" type=\"hidden\" value=\"" + data[prop].id + "\"\
                                     <strong>Dados do Usuário</strong></h2>\n\
                                     <strong>Nome: </strong>" + data[prop].nome + "<br>\n\
                                     <strong>Cidade/Estado: \n\
