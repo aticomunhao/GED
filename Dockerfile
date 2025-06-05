@@ -35,7 +35,9 @@ ENV TZ=America/Sao_Paulo
 
 # Configura o php.ini para fuso horário e formato de hora
 RUN echo "date.timezone = America/Sao_Paulo" >> /usr/local/etc/php/php.ini \
-    && echo "intl.default_locale = pt_BR" >> /usr/local/etc/php/php.ini
+    && echo "intl.default_locale = pt_BR" >> /usr/local/etc/php/php.ini \
+    && echo "memory_limit = 512M" >> /usr/local/etc/php/php.ini \
+    && echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini
 
 RUN pecl install redis-4.3.0 && docker-php-ext-enable redis
 
