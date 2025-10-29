@@ -83,7 +83,8 @@ class Usuario extends CI_Controller {
             $cpfcnpj = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
             $selCidade = $this->input->post('selCidade');
             $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $retorno = $this->usuario->inserir($nome, $cpfcnpj, $selCidade, $telefone,$nomeResponsavel);
+            $observacoes = $this->input->post('observacoes');
+            $retorno = $this->usuario->inserir($nome, $cpfcnpj, $selCidade, $telefone,$nomeResponsavel, $observacoes);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 
@@ -146,7 +147,8 @@ class Usuario extends CI_Controller {
             $cpf = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
             $selCidade = $this->input->post('selCidade');
             $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $retorno = $this->usuario->atualizar($nome, $cpf, $selCidade, $telefone, $id,$nomeResponsavel);
+            $observacoes = $this->input->post('observacoes');
+            $retorno = $this->usuario->atualizar($nome, $cpf, $selCidade, $telefone, $id,$nomeResponsavel, $observacoes);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 

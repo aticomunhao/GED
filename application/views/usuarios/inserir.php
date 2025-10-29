@@ -36,6 +36,12 @@
                         <?= form_error('responsavel');
                         ?>
                     </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <label for = "responsavel">Observações  </label><small>   (opcional)</small>
+                        <textarea id = "observacoes" name = "observacoes" class = "form-control" rows="3" maxlength="255"><?= set_value('observacoes') ?></textarea>
+                        <?= form_error('responsavel');
+                        ?>
+                    </div>
                 </div>
             </div>
             <div class="row">

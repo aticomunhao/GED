@@ -54,7 +54,7 @@ class Usuario_model extends CI_Model {
         }
     }
 
-    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel) {
+    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel, $observacoes = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL)) {
             return 8;
@@ -66,7 +66,8 @@ class Usuario_model extends CI_Model {
             "telefone" => $telefone,
             "id_voluntario_cadastro" => $this->session->userdata('id'),
             "data_cadastro" => $this->data->obterDateTime(),
-            "responsavel" => $nomeResponsavel
+            "responsavel" => $nomeResponsavel,
+            "observacoes" => $observacoes
         );
 
         $this->db->trans_start();
@@ -115,7 +116,7 @@ class Usuario_model extends CI_Model {
         return $this->db->query("SELECT *  FROM  v_usuarios where id=$id");
     }
 
-    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel) {
+    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel, $observacoes = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL, $id)) {
             return 8;
@@ -126,7 +127,8 @@ class Usuario_model extends CI_Model {
             "cod_cidades" => $selCidade,
             "telefone" => $telefone,
             "id_voluntario_cadastro" => $this->session->userdata('id'),
-            "responsavel" => $nomeResponsavel
+            "responsavel" => $nomeResponsavel,
+            "observacoes" => $observacoes
         );
 
         $this->db->trans_start();
@@ -216,7 +218,7 @@ class Usuario_model extends CI_Model {
                 "quantidade" => $row->qtde,
                 "obs" => $row->observacao,
                 "nomeVoluntario" => strtoupper($this->voluntario->obterNome($row->id_voluntario_cadastro)),
-                "data" => $data->format("d/m/Y h:i:s"),
+                "data" => $data->format("d/m/Y H:i:s"),
                 "nomeUsuario" => $this->obterNome($row->id_usuario)
                     )
             );
