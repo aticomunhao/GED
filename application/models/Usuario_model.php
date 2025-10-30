@@ -54,7 +54,7 @@ class Usuario_model extends CI_Model {
         }
     }
 
-    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel, $observacoes = NULL) {
+    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL)) {
             return 8;
@@ -67,7 +67,10 @@ class Usuario_model extends CI_Model {
             "id_voluntario_cadastro" => $this->session->userdata('id'),
             "data_cadastro" => $this->data->obterDateTime(),
             "responsavel" => $nomeResponsavel,
-            "observacoes" => $observacoes
+            "observacoes" => $observacoes,
+            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
+            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
+            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
         );
 
         $this->db->trans_start();
@@ -116,7 +119,7 @@ class Usuario_model extends CI_Model {
         return $this->db->query("SELECT *  FROM  v_usuarios where id=$id");
     }
 
-    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel, $observacoes = NULL) {
+    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL, $id)) {
             return 8;
@@ -128,7 +131,10 @@ class Usuario_model extends CI_Model {
             "telefone" => $telefone,
             "id_voluntario_cadastro" => $this->session->userdata('id'),
             "responsavel" => $nomeResponsavel,
-            "observacoes" => $observacoes
+            "observacoes" => $observacoes,
+            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
+            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
+            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
         );
 
         $this->db->trans_start();

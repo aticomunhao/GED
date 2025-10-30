@@ -1,5 +1,6 @@
 $(document).ready(function () {
   $("#cpf").inputmask("999.999.999-99");
+  $("#cep").inputmask("99.999-999");
   $(function () {
     $("#peridoInicial,#peridoFinal").inputmask("99/99/9999");
   });
@@ -93,7 +94,14 @@ $(document).ready(function () {
                       " - " +
                       data[prop].sigla +
                       "<br>\n\
-                                    </strong>Responsável:  " +
+                                    <strong>Endereço: \n\
+                                    </strong>  " +
+                      (data[prop].endereco
+                        ? data[prop].endereco + ", " + data[prop].bairro
+                        : "") +
+                      (data[prop].cep ? ", CEP: " + data[prop].cep : "") +
+                      "<br>\n\
+                                    </strong><strong>Responsável:</strong>  " +
                       data[prop].responsavel +
                       "<br>\n\
                                     <h3><strong> Histórico</strong>\

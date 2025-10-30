@@ -95,6 +95,59 @@
           })
           .error(function (data, status, headers, config) {});
       };
+
+      $scope.addressByCep = function (cep) {
+        cep = cep.replace(/\D/g, "");
+        if (cep.length == 8) {
+          $http
+            .get("https://viacep.com.br/ws/" + cep + "/json/")
+            .then(function (results) {
+              //console.log("cepppp", results?.data);
+              if (results?.data?.uf) {
+                const dados = results.data;
+                $("#selCidade").empty();
+
+                function esperarOpcoes(selectId, callback) {
+                  const intervalo = setInterval(function () {
+                    if ($(selectId + " option").length > 1) {
+                      clearInterval(intervalo);
+                      callback();
+                    }
+                  }, 100);
+                }
+
+                esperarOpcoes("#selEstado", function () {
+                  $("#selEstado option")
+                    .filter(function () {
+                      return (
+                        $(this).text().trim().toUpperCase() ===
+                        dados.uf.toUpperCase()
+                      );
+                    })
+                    .prop("selected", true)
+                    .trigger("change");
+                });
+
+                esperarOpcoes("#selCidade", function () {
+                  $("#selCidade option")
+                    .filter(function () {
+                      return dados.localidade
+                        .toLowerCase()
+                        .includes($(this).text().trim().toLowerCase());
+                    })
+                    .prop("selected", true)
+                    .trigger("change");
+                });
+
+                $scope.bairro = dados.bairro;
+                $scope.endereco = dados.logradouro;
+              }
+            })
+            .catch(function (error) {
+              console.error("Erro ao buscar CEP:", error);
+            });
+        }
+      };
     },
   ]);
 })(angular);

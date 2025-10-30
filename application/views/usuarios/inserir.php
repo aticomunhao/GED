@@ -56,17 +56,20 @@
             </div>
             <div class="row">
                 <div class="form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <label for = "cep">CEP</label>
+                        <input id="cep" name="cep" class="form-control" type="text" value="<?= set_value('cep') ?>" 
+                            style="width: 200px;" ng-model="cep" ng-change="addressByCep(cep)" maxlength="11">
+                        <?= form_error('cep'); ?>
+                    </div>
                     <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 form-group">
-                        <label for = "selEstado">Estado</label>
-                        <!--                         <select class="form-control" id="selEstado" name="selEstado" ng-model="selEstado" ng-change="listarcity()">
-                                               -->
+                        <label for = "selEstado">Estado</label>                        
                         <select class="form-control" id="selEstado" name="selEstado">
                             <?php foreach ($estados->result() as $row): ?>
                                 <option value="<?= $row->id ?>" <?php echo set_select('selEstado', $row->id, set_value('selEstado') == $row->id ? TRUE : FALSE); ?>><?= strtoupper($row->sigla); ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?= form_error('selEstado');
-                        ?>
+                        <?= form_error('selEstado'); ?>
                     </div>
                     <div id="load"> </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
@@ -76,8 +79,17 @@
                                 <option value="<?= $row->id ?>" <?php echo set_select('selCidade', $row->id, set_value('selCidade') == $row->id ? TRUE : FALSE); ?>><?= strtoupper($row->nome); ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?= form_error('selCidade');
-                        ?>
+                        <?= form_error('selCidade'); ?>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <label for = "endereco">Endereço</label>
+                        <input id="endereco" name="endereco" class="form-control" type="text" value="<?= set_value('endereco') ?>" ng-model="endereco">
+                        <?= form_error('endereco'); ?>
+                    </div>                    
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form-group">
+                        <label for = "bairro">Bairro</label>
+                        <input id="bairro" name="bairro" class="form-control" type="text" value="<?= set_value('bairro') ?>" ng-model="bairro">
+                        <?= form_error('bairro'); ?>
                     </div>
                 </div>
             </div>
