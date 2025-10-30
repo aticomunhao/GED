@@ -140,7 +140,12 @@ class Produto_model extends CI_Model
 
     public function historicoRetiradasEntidades($datas)
     {
-        return $this->db->query("SELECT sum(qtde) as qtde , p.nome as produto, u.nome as nome ,u.cpf as identificador
+        return $this->db->query("SELECT 
+                                        sum(qtde) as qtde , 
+                                        p.nome as produto, 
+                                        u.nome as nome ,
+                                        u.cpf as identificador,
+                                        s.data_saida
                                     FROM
                                         saida_produto AS s
                                             INNER JOIN
@@ -153,7 +158,7 @@ class Produto_model extends CI_Model
                                          and
                                          LENGTH(u.cpf)>11
                                          $datas
-                                    group by s.id_produto,s.id_usuario
+                                    group by s.id_produto,s.id_usuario,s.data_saida
                                     order by u.nome ASC");
     }
 

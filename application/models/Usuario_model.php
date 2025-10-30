@@ -245,11 +245,14 @@ class Usuario_model extends CI_Model {
         $dados = array();
         foreach ($query->result() as $row) {
 
+            $dataSaida = new DateTime($row->data_saida);
+
              array_push($dados, array(
                     "nomeProduto" => strtoupper($row->produto),
                     "quantidade" => $row->qtde,
                     "nomeEntidade" => strtoupper($row->nome),
-                    "identificador" =>  $this->Mask("##.###.###/####-##", $row->identificador)
+                    "identificador" =>  $this->Mask("##.###.###/####-##", $row->identificador),
+                    "dataSaida" => $dataSaida->format("d/m/Y h:i:s")
                 )
             );
         }

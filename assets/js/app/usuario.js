@@ -6,9 +6,11 @@
   angular.element(document).ready(function () {
     var input = document.getElementById("nome");
 
-    input.addEventListener("input", function () {
-      this.value = this.value.toUpperCase();
-    });
+    if (input) {
+      input.addEventListener("input", function () {
+        this.value = this.value.toUpperCase();
+      });
+    }
   });
 
   app.filter("startFrom", function () {
