@@ -527,7 +527,7 @@ $(document).ready(function () {
   });
 
   $("#btGerarPDFRetiradasEntides").click(function () {
-    uploadReportFromHtmlTable(
+    downloadReportFromHtmlTable(
       "#dadosImpressaoHistoricoRetiradasEntidades",
       "Histórico de Distribuição Para Entidades",
       imgData
@@ -535,7 +535,7 @@ $(document).ready(function () {
   });
 });
 
-function uploadReportFromHtmlTable(id, title, imgData) {
+function downloadReportFromHtmlTable(id, title, imgData) {
   const pdf = new jsPDF("p", "pt", "a4");
   const pageWidth = pdf.internal.pageSize.width;
   const pageHeight = pdf.internal.pageSize.height;
@@ -672,7 +672,7 @@ function uploadReportFromHtmlTable(id, title, imgData) {
   pdf.save("historico_retirada_entidades.pdf");
 }
 
-function uploadReportFromHtml(id, title, imgData) {
+function downloadReportFromHtml(id, title, imgData) {
   var pdf = new jsPDF("portrait", "pt", "A4");
   pdf.addImage(imgData, "JPEG", 30, 30, 60, 60);
   pdf.text(120, 50, "GED - Gestão de Estoque e Distribuição");
@@ -719,7 +719,7 @@ function uploadReportFromHtml(id, title, imgData) {
   );
 }
 
-function uploadReportFromHtmlCanvas(id, title, imgData) {
+function downloadReportFromHtmlCanvas(id, title, imgData) {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 

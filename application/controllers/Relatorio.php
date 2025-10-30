@@ -182,6 +182,13 @@ class Relatorio extends CI_Controller
 
             $this->load->model('datas_model', 'datas');
             $dataFiltro = $this->datas->preparaCondicaoDatas($datas['peridoInicial'], $datas['peridoFinal'], ' s.data_saida');
+
+            $cpfcnpj = $this->input->post('cpfcnpj');
+            if ($cpfcnpj) {
+                $cpfcnpj_filter = preg_replace('/\D/', '', $cpfcnpj);
+                $dataFiltro .= " AND u.cpf = '{$cpfcnpj_filter}' ";
+            }
+
             $query = $this->produtos->historicoRetiradasEntidades($dataFiltro);
             $this->load->model('usuario_model', 'usuario');
             $dados = $this->usuario->formataDadosHistoricoEntidades($query);
@@ -190,7 +197,7 @@ class Relatorio extends CI_Controller
             $this->load->view('template/header.php');
             $this->load->view('template/navbar.php');
             $this->load->view('template/principal.php');
-            $this->load->view('relatorio/historico_retiradas_entidades.php',array("historico" => $dados, "dataI"=>$datas['peridoInicial'],"dataF"=>$datas['peridoFinal']));
+            $this->load->view('relatorio/historico_retiradas_entidades.php',array("historico" => $dados, "dataI"=>$datas['peridoInicial'],"dataF"=>$datas['peridoFinal'], 'cpfcnpj' => $cpfcnpj));
             $this->load->view('template/footer.php');
         }
     }

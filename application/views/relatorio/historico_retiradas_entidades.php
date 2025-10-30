@@ -16,7 +16,10 @@
         <br>
         <div id="dadosImpressaoHistoricoRetiradasEntidades">
             <?php if($dataI && $dataF):?>
-            <strong>Período entre <?= ($dataI . ' e ' . $dataF);?></strong>
+                <strong> Período entre <?= ($dataI . ' e ' . $dataF);?> </strong>
+            <?php endif;?>
+            <?php if($cpfcnpj):?>
+                <strong> CNPJ <?= $cpfcnpj;?> </strong>
             <?php endif;?>
             <table id="tab_customers" class="table table-striped">                
                 <thead>
