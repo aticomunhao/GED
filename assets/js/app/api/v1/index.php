@@ -186,6 +186,9 @@ $app->get('/usuariocpf', function() {
         $usuario["nome"] = $row["nome"];
         $usuario["telefone"] = Telefone($row["telefone"]);
         $usuario["cidade"] = $row["cod_cidades"];
+        $usuario["cep"] = $row["cep"];
+        $usuario["endereco"] = $row["endereco"];
+        $usuario["bairro"] = $row["bairro"];
         $usuario["cpf"] = $num;
         $usuario["idCadastro"] = $row["id_voluntario_cadastro"];
         $usuario["status"] = $row["status"];

@@ -54,7 +54,7 @@ class Usuario_model extends CI_Model {
         }
     }
 
-    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel) {
+    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL)) {
             return 8;
@@ -66,7 +66,11 @@ class Usuario_model extends CI_Model {
             "telefone" => $telefone,
             "id_voluntario_cadastro" => $this->session->userdata('id'),
             "data_cadastro" => $this->data->obterDateTime(),
-            "responsavel" => $nomeResponsavel
+            "responsavel" => $nomeResponsavel,
+            "observacoes" => $observacoes,
+            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
+            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
+            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
         );
 
         $this->db->trans_start();
@@ -115,7 +119,7 @@ class Usuario_model extends CI_Model {
         return $this->db->query("SELECT *  FROM  v_usuarios where id=$id");
     }
 
-    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel) {
+    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
 
         if ($this->bolChecaCpfCadastrado($cpf, NULL, $id)) {
             return 8;
@@ -126,7 +130,11 @@ class Usuario_model extends CI_Model {
             "cod_cidades" => $selCidade,
             "telefone" => $telefone,
             "id_voluntario_cadastro" => $this->session->userdata('id'),
-            "responsavel" => $nomeResponsavel
+            "responsavel" => $nomeResponsavel,
+            "observacoes" => $observacoes,
+            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
+            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
+            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
         );
 
         $this->db->trans_start();
@@ -216,7 +224,7 @@ class Usuario_model extends CI_Model {
                 "quantidade" => $row->qtde,
                 "obs" => $row->observacao,
                 "nomeVoluntario" => strtoupper($this->voluntario->obterNome($row->id_voluntario_cadastro)),
-                "data" => $data->format("d/m/Y h:i:s"),
+                "data" => $data->format("d/m/Y H:i:s"),
                 "nomeUsuario" => $this->obterNome($row->id_usuario)
                     )
             );
@@ -243,11 +251,14 @@ class Usuario_model extends CI_Model {
         $dados = array();
         foreach ($query->result() as $row) {
 
+            $dataSaida = new DateTime($row->data_saida);
+
              array_push($dados, array(
                     "nomeProduto" => strtoupper($row->produto),
                     "quantidade" => $row->qtde,
                     "nomeEntidade" => strtoupper($row->nome),
-                    "identificador" =>  $this->Mask("##.###.###/####-##", $row->identificador)
+                    "identificador" =>  $this->Mask("##.###.###/####-##", $row->identificador),
+                    "dataSaida" => $dataSaida->format("d/m/Y h:i:s")
                 )
             );
         }

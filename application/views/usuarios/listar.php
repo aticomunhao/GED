@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="usuario in filtered = (list| filter:search | orderBy : predicate :reverse) | startFrom:(currentPage - 1) * entryLimit | limitTo:entryLimit" >
+                            <tr ng-repeat="usuario in filtered = (list| accentInsensitiveFilter:search | orderBy : predicate :reverse) | startFrom:(currentPage - 1) * entryLimit | limitTo:entryLimit" >
 
                                 <td><a class="tooltipUsuario" 
                                        href="<?= base_url('usuario/editar') ?>/{{usuario.id}}"

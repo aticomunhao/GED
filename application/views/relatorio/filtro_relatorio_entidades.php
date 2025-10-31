@@ -14,6 +14,13 @@
                  <p class="text-primary">Para obter de todo o período, basta não informar as datas </p>   
 
                 <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                        <label for = "cpfcnpj">CNPJ</label>
+                        <input id="cpfcnpj" name="cpfcnpj" placeholder="Insira o CNPJ" class="form-control"  title="Insira o CNPJ" type="text" 
+                            value="<?= set_value('cpfcnpj') ?>" style="width: 300px;" maxlength="18"
+                            onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)">
+                        <?= form_error('cpfcnpj'); ?>
+                    </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
                         <label for = "peridoInicial">Inicio</label>
                         <div class="input-group date datas">
