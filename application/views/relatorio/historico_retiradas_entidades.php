@@ -14,19 +14,17 @@
             
         </div>
         <br>
-        <div id="dadosImpressaoHistoricoRetiradasEntidades">
-            <?php if($dataI && $dataF):?>
-                <strong> Período entre <?= ($dataI . ' e ' . $dataF);?> </strong>
-            <?php endif;?>
-            <?php if($cpfcnpj):?>
-                <strong> CNPJ <?= $cpfcnpj;?> </strong>
+        <div id="dadosImpressaoHistoricoRetiradasEntidades">            
+            <?php if($filtros):?>
+                <strong> <?php echo implode(", ", $filtros);?> </strong>
             <?php endif;?>
             <table id="tab_customers" class="table table-striped">                
                 <thead>
                     <tr class='warning'>
                         <th width="15%">CNPJ</th>
-                        <th width="40%">Entidade</th>
-                        <th width="20%">Produto</th>
+                        <th width="30%">Entidade</th>
+                        <th width="15%">Cidade</th>
+                        <th width="15%">Produto</th>
                         <th width="15%">Data de Retirada</th>
                         <th width="10%">Quantidade</th>
 
@@ -38,6 +36,7 @@
                         <tr>
                              <td><?= $row['identificador'] ?></td>
                             <td><?= $row['nomeEntidade'] ?></td>
+                            <td><?= $row['cidade'] ?></td>
                             <td><?= $row['nomeProduto'] ?></td>
                             <td><?= $row['dataSaida'] ?></td>
                             <td><?= $row['quantidade'] ?></td>
@@ -45,6 +44,7 @@
                         </tr>
                     <?php endforeach; ?>    
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

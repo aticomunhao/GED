@@ -36,7 +36,10 @@ $(document).ready(function () {
           $("#load").hide();
 
           if (data) {
-            $("#selCidade").empty();
+            $("#selCidade").empty().attr("disabled", false);
+            $("#selCidade").append(
+              $("<option></option>").val(null).html("Selecione...")
+            );
             for (var prop in data) {
               $("#selCidade").append(
                 $("<option></option>").val(data[prop].id).html(data[prop].nome)

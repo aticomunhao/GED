@@ -20,7 +20,7 @@
                             value="<?= set_value('cpfcnpj') ?>" style="width: 300px;" maxlength="18"
                             onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)">
                         <?= form_error('cpfcnpj'); ?>
-                    </div>
+                    </div>                    
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
                         <label for = "peridoInicial">Inicio</label>
                         <div class="input-group date datas">
@@ -31,9 +31,6 @@
                         </div>
                         <?= form_error('peridoInicial'); ?>
                     </div>
-
-
-
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
                         <label for = "peridoFinal"> Fim</label>
                         <div class="input-group date datas">
@@ -43,6 +40,27 @@
                             </span>
                         </div>
                         <?= form_error('peridoFinal'); ?>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
+                        <label for = "selEstado">Estado</label>                        
+                        <select class="form-control" id="selEstado" name="selEstado">
+                            <option value="">Selecione...</option>
+                            <?php foreach ($estados->result() as $row): ?>
+                                <option value="<?= $row->id ?>" <?php echo set_select('selEstado', $row->id, set_value('selEstado') == $row->id ? TRUE : FALSE); ?>><?= strtoupper($row->sigla); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?= form_error('selEstado'); ?>
+                    </div>
+                    <div id="load"> </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+                        <label for = "selCidade">Cidade</label>
+                        <select class="form-control" id="selCidade" name="selCidade" disabled>
+                            <option value="">Selecione...</option>
+                            <?php foreach ($cidades->result() as $row): ?>
+                                <option value="<?= $row->id ?>" <?php echo set_select('selCidade', $row->id, set_value('selCidade') == $row->id ? TRUE : FALSE); ?>><?= strtoupper($row->nome); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?= form_error('selCidade'); ?>
                     </div>
                 </div>
 
