@@ -220,7 +220,7 @@ class Relatorio extends CI_Controller
             if ($estado) {
                 if ($cidade) {
                     $localizacao = $dados[0]['cidade'];
-                    $arFiltro[] = "Localização: {$cpfcnpj}";
+                    $arFiltro[] = "Localização: {$localizacao}";
                 } else {
                     $localizacao = isset($dados[0]['cidade']) ? trim(explode('-', $dados[0]['cidade'])[1]) : '';
                     $arFiltro[] = "Localização: {$localizacao}";

@@ -576,7 +576,7 @@ function downloadReportFromHtmlTable(id, title, imgData) {
   const $filter = $element.find("strong");
 
   if ($filter.text()) {
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.text($filter.text(), 100, 90);
   }
 

@@ -16,7 +16,7 @@
         <br>
         <div id="dadosImpressaoHistoricoRetiradasEntidades">            
             <?php if($filtros):?>
-                <strong> <?php echo implode(", ", $filtros);?> </strong>
+                <strong style="font-size: 12px;"> <?php echo implode(", ", $filtros);?> </strong>
             <?php endif;?>
             <table id="tab_customers" class="table table-striped">                
                 <thead>
