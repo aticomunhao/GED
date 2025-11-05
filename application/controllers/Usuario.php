@@ -83,7 +83,11 @@ class Usuario extends CI_Controller {
             $cpfcnpj = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
             $selCidade = $this->input->post('selCidade');
             $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $retorno = $this->usuario->inserir($nome, $cpfcnpj, $selCidade, $telefone,$nomeResponsavel);
+            $observacoes = $this->input->post('observacoes');
+            $endereco['cep'] = $this->input->post('cep');
+            $endereco['endereco'] = $this->input->post('endereco');
+            $endereco['bairro'] = $this->input->post('bairro');
+            $retorno = $this->usuario->inserir($nome, $cpfcnpj, $selCidade, $telefone,$nomeResponsavel, $observacoes, $endereco);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 
@@ -133,7 +137,6 @@ class Usuario extends CI_Controller {
             $query = $this->usuario->buscarUsuarioPorId($id);
             $usuario = $query->row();
 
-
             $estados = $this->usuario->listarEstados();
             $cidades = $this->usuario->listarcidades($usuario->idEstados, FALSE);
 
@@ -146,7 +149,11 @@ class Usuario extends CI_Controller {
             $cpf = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
             $selCidade = $this->input->post('selCidade');
             $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $retorno = $this->usuario->atualizar($nome, $cpf, $selCidade, $telefone, $id,$nomeResponsavel);
+            $observacoes = $this->input->post('observacoes');
+            $endereco['cep'] = $this->input->post('cep');
+            $endereco['endereco'] = $this->input->post('endereco');
+            $endereco['bairro'] = $this->input->post('bairro');
+            $retorno = $this->usuario->atualizar($nome, $cpf, $selCidade, $telefone, $id,$nomeResponsavel, $observacoes, $endereco);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 

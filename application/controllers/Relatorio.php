@@ -167,30 +167,76 @@ class Relatorio extends CI_Controller
         $this->form_validation->set_error_delimiters('<div><p class="text-danger">', '</p></div>');
 
         if ($this->form_validation->run() == false) {
+
+            $this->load->model('usuario_model', 'usuario');
+            $estados = $this->usuario->listarEstados();
+            $cidades = $this->usuario->listarcidades(FALSE, FALSE);
+
             $this->load->view('template/html.php');
             $this->load->view('template/header.php');
             $this->load->view('template/navbar.php');
             $this->load->view('template/principal.php');
-            $this->load->view('relatorio/filtro_relatorio_entidades.php');
+            $this->load->view('relatorio/filtro_relatorio_entidades.php', array('cidades' => $cidades, 'estados' => $estados));
             $this->load->view('template/footer.php');
         } else {
 
-            $datas = array(
-                "peridoInicial" => $this->input->post('peridoInicial'),
-                "peridoFinal" => $this->input->post('peridoFinal')
-            );
+            $arFiltro = array();
+            $dataFiltro = null;            
+            $peridoInicial = $this->input->post('peridoInicial');
+            $peridoFinal = $this->input->post('peridoFinal');
 
-            $this->load->model('datas_model', 'datas');
-            $dataFiltro = $this->datas->preparaCondicaoDatas($datas['peridoInicial'], $datas['peridoFinal'], ' s.data_saida');
+            if ($peridoInicial && $peridoFinal) {
+                $datas = array(
+                    "peridoInicial" => $this->input->post('peridoInicial'),
+                    "peridoFinal" => $this->input->post('peridoFinal')
+                );
+
+                $this->load->model('datas_model', 'datas');
+                $dataFiltro .= $this->datas->preparaCondicaoDatas($datas['peridoInicial'], $datas['peridoFinal'], ' s.data_saida');
+                $arFiltro[] = "Período entre: {$peridoInicial} e {$peridoFinal}"; 
+            }
+
+            $cpfcnpj = $this->input->post('cpfcnpj');
+            if ($cpfcnpj) {
+                $cpfcnpj_filter = preg_replace('/\D/', '', $cpfcnpj);
+                $dataFiltro .= " AND u.cpf = '{$cpfcnpj_filter}' ";
+                $arFiltro[] = "CNPJ: {$cpfcnpj}";
+            }
+
+            $estado = $this->input->post('selEstado');
+            if ($estado) {
+                $dataFiltro .= " AND e.cod_estados = '{$estado}' ";
+            }
+
+            $cidade = $this->input->post('selCidade');
+            if ($cidade) {
+                $dataFiltro .= " AND c.cod_cidades = '{$cidade}' ";
+            }
+
             $query = $this->produtos->historicoRetiradasEntidades($dataFiltro);
             $this->load->model('usuario_model', 'usuario');
             $dados = $this->usuario->formataDadosHistoricoEntidades($query);
 
+            if ($estado) {
+                if ($cidade) {
+                    $localizacao = $dados[0]['cidade'];
+                    $arFiltro[] = "Localização: {$localizacao}";
+                } else {
+                    $localizacao = isset($dados[0]['cidade']) ? trim(explode('-', $dados[0]['cidade'])[1]) : '';
+                    $arFiltro[] = "Localização: {$localizacao}";
+                }
+            }
+
+            $dataView = array(
+                "historico" => $dados, 
+                "filtros" => $arFiltro
+            );
+
             $this->load->view('template/html.php');
             $this->load->view('template/header.php');
             $this->load->view('template/navbar.php');
             $this->load->view('template/principal.php');
-            $this->load->view('relatorio/historico_retiradas_entidades.php',array("historico" => $dados, "dataI"=>$datas['peridoInicial'],"dataF"=>$datas['peridoFinal']));
+            $this->load->view('relatorio/historico_retiradas_entidades.php',$dataView);
             $this->load->view('template/footer.php');
         }
     }

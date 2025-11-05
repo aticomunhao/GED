@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/';
+$config['base_url'] = 'http://192.168.1.156';
 
 /*
 |--------------------------------------------------------------------------
@@ -367,10 +367,10 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'redis';
+$config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'ci_sessions';
 $config['sess_expiration'] = 0;
-$config['sess_save_path'] = 'tcp://redis:6379';
+$config['sess_save_path'] = 'ci_sessions';
 $config['sess_match_ip'] = TRUE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -478,7 +478,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] =  'UM3'; #'local';
+$config['time_reference'] =  'local'; #'local';
 
 /*
 |--------------------------------------------------------------------------

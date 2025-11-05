@@ -83,6 +83,8 @@
                 </div>
             </div>
 
+            <input type="hidden" id="identUsuario" name="identUsuario">
+
             <div class="pull-right">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>
                 <a href="<?= base_url('sistema/inicio') ?>" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
@@ -91,7 +93,6 @@
         </fieldset>
 
     </form>
-
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

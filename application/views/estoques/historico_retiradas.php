@@ -36,16 +36,26 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $totoalQtde = 0; ?>
                     <?php foreach ($historico as $row): ?>
                         <tr>
-                             <td><?= $row['nomeUsuario'] ?></td>
+                            <td><?= $row['nomeUsuario'] ?></td>
                             <td><?= $row['nomeProduto'] ?></td>
                             <td><?= $row['quantidade'] ?></td>
                             <td><?= $row['obs'] ?></td>
                             <td><?= $row['data'] ?></td>
                             <td><?= $row['nomeVoluntario'] ?></td>
                         </tr>
+                        <?php $totoalQtde = $totoalQtde + $row['quantidade'] ?>
                     <?php endforeach; ?>    
+                    <tr class='warning'>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="font-weight: bold;">Retirada Total</td>
+                        <td style="font-weight: bold;"><?php echo $totoalQtde; ?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

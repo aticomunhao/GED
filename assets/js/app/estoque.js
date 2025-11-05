@@ -27,7 +27,7 @@
         function ($scope, $http, $timeout) {
 
 
-            var serviceBase = window.location.origin + '/assets/js/app/api/v1';
+            var serviceBase = '/assets/js/app/api/v1';
             $http.get(serviceBase + '/estoque').then(function (results) {
                 $scope.list = results.data;
                 $scope.filteredItems = $scope.list.length; //Initially for no filter  
@@ -67,7 +67,7 @@
                 }
                 $http({
                     method: 'POST',
-                    url: window.location.origin + '/estoque/deletar',
+                    url: '/estoque/deletar',
                     data: "estoque=" + JSON.stringify(estoque),
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                 }).

@@ -14,37 +14,42 @@
             
         </div>
         <br>
-        <div id="dadosImpressaoHistoricoRetiradasEntidades">
-            <?php if($dataI && $dataF):?>
-            <strong>Período entre <?= ($dataI . ' e ' . $dataF);?></strong>
+        <div id="dadosImpressaoHistoricoRetiradasEntidades">            
+            <?php if($filtros):?>
+                <strong style="font-size: 12px;"> <?php echo implode(", ", $filtros);?> </strong>
             <?php endif;?>
-            <table id="tab_customers" class="table table-striped">
-                <colgroup>
-                    <col width="20%">
-                    <col width="35%">
-                    <col width="25%">
-                    <col width="20%">
-
-                </colgroup>
+            <table id="tab_customers" class="table table-striped">                
                 <thead>
                     <tr class='warning'>
-                        <th>CNPJ</th>
-                        <th>Entidade</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-
+                        <th width="15%">CNPJ</th>
+                        <th width="35%">Entidade</th>
+                        <th width="15%">Cidade</th>
+                        <th width="10%">Produto</th>
+                        <th width="15%">Data de Retirada</th>
+                        <th width="10%">Quantidade</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $totalQtde=0; ?>
                     <?php foreach ($historico as $row): ?>
                         <tr>
-                             <td><?= $row['identificador'] ?></td>
+                            <td><?= $row['identificador'] ?></td>
                             <td><?= $row['nomeEntidade'] ?></td>
+                            <td><?= $row['cidade'] ?></td>
                             <td><?= $row['nomeProduto'] ?></td>
+                            <td><?= $row['dataSaida'] ?></td>
                             <td><?= $row['quantidade'] ?></td>
-
+                            <?php $totalQtde=$totalQtde+$row['quantidade']; ?>
                         </tr>
                     <?php endforeach; ?>    
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total</td>
+                        <td><?php echo $totalQtde; ?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
