@@ -257,8 +257,9 @@ class Usuario_model extends CI_Model {
                     "nomeProduto" => strtoupper($row->produto),
                     "quantidade" => $row->qtde,
                     "nomeEntidade" => strtoupper($row->nome),
+                    "cidade" => $row->cidade . " - " . $row->estado,
                     "identificador" =>  $this->Mask("##.###.###/####-##", $row->identificador),
-                    "dataSaida" => $dataSaida->format("d/m/Y h:i:s")
+                    "dataSaida" => $dataSaida->format("d/m/Y")
                 )
             );
         }

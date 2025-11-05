@@ -143,7 +143,9 @@ class Produto_model extends CI_Model
         return $this->db->query("SELECT 
                                         sum(qtde) as qtde , 
                                         p.nome as produto, 
-                                        u.nome as nome ,
+                                        u.nome as nome,
+                                        c.nome as cidade,
+                                        e.sigla as estado,
                                         u.cpf as identificador,
                                         s.data_saida
                                     FROM
@@ -152,6 +154,10 @@ class Produto_model extends CI_Model
                                         produto AS p ON s.id_produto = p.id
                                             INNER JOIN
                                         usuarios AS u ON s.id_usuario = u.id
+                                            LEFT JOIN 
+                                        cidades c ON c.cod_cidades = u.cod_cidades
+                                            LEFT JOIN
+                                        estados e ON e.cod_estados = c.estados_cod_estados
                                     WHERE
 
                                          s.tipo_retirada = 1

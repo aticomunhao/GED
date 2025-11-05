@@ -36,7 +36,10 @@ $(document).ready(function () {
           $("#load").hide();
 
           if (data) {
-            $("#selCidade").empty();
+            $("#selCidade").empty().attr("disabled", false);
+            $("#selCidade").append(
+              $("<option></option>").val(null).html("Selecione...")
+            );
             for (var prop in data) {
               $("#selCidade").append(
                 $("<option></option>").val(data[prop].id).html(data[prop].nome)
@@ -488,49 +491,11 @@ $(document).ready(function () {
   });
 
   $("#btGerarPDFRetiradas").click(function () {
-    var pdf = new jsPDF("landscape", "pt", "A4");
-    pdf.addImage(imgData, "JPEG", 30, 30, 60, 60);
-    pdf.text(120, 50, "GED - Gestão de Estoque e Distribuição");
-    pdf.text(150, 70, "Histórico de Retirada de Produtos");
-
-    // source can be HTML-formatted string, or a reference
-    // to an actual DOM element from which the text will be scraped.
-    source = $("#dadosImpressaoHistoricoRetiradas")[0];
-
-    // we support special element handlers. Register them with jQuery-style
-    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-    // There is no support for any other type of selectors
-    // (class, of compound) at this time.
-    specialElementHandlers = {
-      // element with id of "bypass" - jQuery style selector
-      "#bypassme": function (element, renderer) {
-        // true = "handled elsewhere, bypass text extraction"
-        return true;
-      },
-    };
-    margins = {
-      top: 120,
-      bottom: 60,
-      left: 40,
-      width: 800,
-    };
-    // all coords and widths are in jsPDF instance's declared units
-    // 'inches' in this case
-    pdf.fromHTML(
-      source, // HTML string or DOM elem ref.
-      margins.left, // x coord
-      margins.top,
-      {
-        // y coord
-        width: margins.width, // max width of content on PDF
-        elementHandlers: specialElementHandlers,
-      },
-      function (dispose) {
-        // dispose: object with X, Y of the last line add to the PDF
-        //          this allow the insertion of new lines after html
-        pdf.save("historico_retiradas.pdf");
-      },
-      margins
+    downloadReportFromHtmlTable(
+      "#dadosImpressaoHistoricoRetiradas",
+      "Histórico de Retirada de Produtos",
+      imgData,
+      "historico_retiradas.pdf"
     );
   });
 
@@ -538,12 +503,13 @@ $(document).ready(function () {
     downloadReportFromHtmlTable(
       "#dadosImpressaoHistoricoRetiradasEntidades",
       "Histórico de Distribuição Para Entidades",
-      imgData
+      imgData,
+      "historico_retirada_entidades.pdf"
     );
   });
 });
 
-function downloadReportFromHtmlTable(id, title, imgData) {
+function downloadReportFromHtmlTable(id, title, imgData, fileName) {
   const pdf = new jsPDF("p", "pt", "a4");
   const pageWidth = pdf.internal.pageSize.width;
   const pageHeight = pdf.internal.pageSize.height;
@@ -573,7 +539,7 @@ function downloadReportFromHtmlTable(id, title, imgData) {
   const $filter = $element.find("strong");
 
   if ($filter.text()) {
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.text($filter.text(), 100, 90);
   }
 
@@ -677,7 +643,7 @@ function downloadReportFromHtmlTable(id, title, imgData) {
     pdf.text(text, pageWidth - textWidth - 20, pageHeight - 10);
   }
 
-  pdf.save("historico_retirada_entidades.pdf");
+  pdf.save(fileName);
 }
 
 function downloadReportFromHtml(id, title, imgData) {
