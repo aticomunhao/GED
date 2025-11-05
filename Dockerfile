@@ -7,7 +7,7 @@ RUN sed -i '/stretch-updates/d' /etc/apt/sources.list && \
     echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
 
 # Instala pacotes e extensões
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --allow-unauthenticated \
     libicu-dev \
     libxml2-dev \
     libzip-dev \
@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    && docker-php-ext-install \
+    tzdata && \
+    docker-php-ext-install \
     pdo \
     pdo_mysql \
     mysqli \
@@ -26,8 +27,17 @@ RUN apt-get update && apt-get install -y \
     tokenizer \
     json \
     zip \
-    fileinfo \
-    && a2enmod rewrite
+    fileinfo && \
+    a2enmod rewrite
+
+# Define fuso horário
+ENV TZ=America/Sao_Paulo
+
+# Configura o php.ini para fuso horário e formato de hora
+RUN echo "date.timezone = America/Sao_Paulo" >> /usr/local/etc/php/php.ini \
+    && echo "intl.default_locale = pt_BR" >> /usr/local/etc/php/php.ini \
+    && echo "memory_limit = 512M" >> /usr/local/etc/php/php.ini \
+    && echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini
 
 RUN pecl install redis-4.3.0 && docker-php-ext-enable redis
 

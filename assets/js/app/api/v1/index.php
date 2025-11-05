@@ -148,7 +148,7 @@ $app->get('/usuariocpf', function() {
 
             if($flags){
                 $data = new DateTime($row["data_saida"]);
-                $dataFormatada = $data->format("d/m/Y h:i:s");
+                $dataFormatada = $data->format("d/m/Y H:i:s");
                 $qtde = $row["qtde"];
                 $produto = strtoupper($row["nome"]);
 
@@ -157,7 +157,7 @@ $app->get('/usuariocpf', function() {
                 array_push($arrRetiradas,array("data"=>$dataFormatada,"qtde"=>$qtde,"nome"=>$produto,"tempo"=>$tempo));
             }else{
                 $data2 = new DateTime($row["data_saida"]);
-                $dataFormatada2 = $data2->format("d/m/Y h:i:s");
+                $dataFormatada2 = $data2->format("d/m/Y H:i:s");
                 $qtde2 = $row["qtde"];
                 $produto2 = strtoupper($row["nome"]);
                 $tempo2 = $row["tempo"];

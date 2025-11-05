@@ -13,7 +13,7 @@ class Estoque extends CI_Controller
         $this->load->model('login_model', 'login');
         $this->login->logged();
         $this->load->model('estoque_model', 'estoque');
-        $this->load->model('mensagens_model', 'mensagens');
+                $this->load->model('mensagens_model', 'mensagens');
     }
 
     public function listar()
@@ -109,25 +109,25 @@ class Estoque extends CI_Controller
 
             $this->load->view('template/footer.php');
         } else {
-
+            
             $idProduto = $this->input->post('selProduto');
             $quantidade = $this->input->post('quantidadeR');
             $obs = $this->input->post('obs');
-            $idUsuario = $this->input->post('identUsuario');
+            $idUsuario = $this->input->post('id_usuario');
 
             $this->load->model('produto_model', 'produto');
             $quantidadeDisponivel = $this->estoque->checaQuantidadeProdutoDisponivel($idProduto);
 
-            if ($quantidade > $quantidadeDisponivel) {
+                        if ($quantidade > $quantidadeDisponivel) {
                 $retorno = 14;
                 $this->mensagens->defineMesagens($retorno);
                 redirect('sistema/inicio');
             } else {
 
-                $this->load->model('datas_model', 'data');
+                                $this->load->model('datas_model', 'data');
                 $data_hora = $this->data->obterDateTime();
 
-                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario, $data_hora);
+                                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario, $data_hora);
                 $this->load->view('template/html.php');
                 $this->load->view('template/header.php');
                 $this->load->view('template/navbar.php');
@@ -146,7 +146,7 @@ class Estoque extends CI_Controller
                     "nomeUsuario" => $nomeUsuario,
                     "nomeProduto" => $nomeProduto,
                     "quantidade" => $quantidade,
-                    "data_hora" => date_format($dataImpressao, 'Y-m-d h:i:s'),
+                    "data_hora" => date_format($dataImpressao, 'Y-m-d H:i:s'),
                     "obs" => $obs
                 ));
 
@@ -207,7 +207,7 @@ class Estoque extends CI_Controller
             $query = $this->estoque->historicoRetiradas($dataFiltro);
             $this->load->model('usuario_model', 'usuario');
             $dados = $this->usuario->formataDadosHistorico($query);
-
+            
             $this->load->view('template/html.php');
             $this->load->view('template/header.php');
             $this->load->view('template/navbar.php');
