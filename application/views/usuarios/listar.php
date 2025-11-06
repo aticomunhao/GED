@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="col-md-12" ng-show="filteredItems > 0">    
-                    <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
+                    <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="(filtered | accentInsensitiveFilter:search).length" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
 
                 </div>
             </div> <!--fim da row-->

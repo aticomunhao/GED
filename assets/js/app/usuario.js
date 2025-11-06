@@ -69,6 +69,11 @@
       $scope.cadastrarUsuario = function () {
         $scope.listar = false;
       };
+      $scope.$watch("search", function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+          $scope.currentPage = 1;
+        }
+      });
 
       $scope.deletarUsuario = function (usuario) {
         if (!confirm("Deseja excluir " + usuario.nome.toUpperCase())) {
