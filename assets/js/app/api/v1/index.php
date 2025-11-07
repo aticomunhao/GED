@@ -94,17 +94,18 @@ $app->get('/voluntarios', function() {
 
 $app->get('/usuarios', function() {
     global $db;
-    $rows = $db->select("v_usuarios", "*", array('status' => 'A'), "ORDER BY nome ASC");
+    $rows = $db->select("v_usuarios", "*", array('status' => 'A'/*, 'nome' => 'BELTRANO DE TAL'*/), "ORDER BY nome ASC");
     $lista = array();
 
 
     foreach ($rows["data"] as $row) {
 
-        if(strlen($row["cpf"]) <= 11 ) {
+        $num = "";
+        if($row["cpf"] && strlen($row["cpf"]) <= 11 ) {
             $num = Mask("###.###.###-##", $row["cpf"]);
-        }else{
+        }
+        if(strlen($row["cpf"]) > 11) {
             $num = Mask("##.###.###/####-##", $row["cpf"]);
-
         }
 
         $usuario = array(); // temp array
@@ -113,14 +114,13 @@ $app->get('/usuarios', function() {
         $usuario["telefone"] = Telefone($row["telefone"]);
         $usuario["cidade"] = $row["cod_cidades"];
         $usuario["cpf"] = $num;
+        $usuario["passaporte"] = $row["passaporte"];
         $usuario["idCadastro"] = $row["id_voluntario_cadastro"];
         $usuario["status"] = $row["status"];
         $usuario["nomeCidade"] = $row["nomeCidade"];
         $usuario["sigla"] = $row["sigla"];
         $usuario["nomeEstado"] = $row["nomeEstado"];
         $usuario["responsavel"] = strtoupper($row["responsavel"]);
-
-
 
         array_push($lista, $usuario);
     }

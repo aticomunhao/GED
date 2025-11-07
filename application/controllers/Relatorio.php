@@ -217,14 +217,27 @@ class Relatorio extends CI_Controller
             $this->load->model('usuario_model', 'usuario');
             $dados = $this->usuario->formataDadosHistoricoEntidades($query);
 
-            if ($estado) {
-                if ($cidade) {
-                    $localizacao = $dados[0]['cidade'];
-                    $arFiltro[] = "Localização: {$localizacao}";
+            if ($estado) {   
+                $localizacao = 'não encontrado';
+                if (!$dados && $cidade) {
+                    $dadosCidade = $this->usuario->buscarCidadePorId($cidade);
+                    $dadosCidadeRow = $dadosCidade->row();
+                    if (isset($dadosCidadeRow->nome)) {
+                        $localizacao = $dadosCidadeRow->nome . ' - ' . $dadosCidadeRow->sigla;
+                    }
+                } else if ($cidade && $dados) {
+                    $localizacao = isset($dados[0]['cidade']) ? $dados[0]['cidade'] : $localizacao;
                 } else {
-                    $localizacao = isset($dados[0]['cidade']) ? trim(explode('-', $dados[0]['cidade'])[1]) : '';
-                    $arFiltro[] = "Localização: {$localizacao}";
+                    $localizacao = isset($dados[0]['cidade']) ? trim(explode('-', $dados[0]['cidade'])[1]) : $localizacao;
+                    if ($localizacao == 'não encontrado') {
+                        $dadosEstado = $this->usuario->buscarEstadoPorId($estado);
+                        $dadosEstadoRow = $dadosEstado->row();
+                        if (isset($dadosEstadoRow->sigla)) {
+                            $localizacao = $dadosEstadoRow->sigla;                            
+                        }
+                    }
                 }
+                $arFiltro[] = "Localização: {$localizacao}";
             }
 
             $dataView = array(

@@ -12,13 +12,39 @@
             <div class="row">
 
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
-
-                    <label for = "cpfcnpj">CPF/CNPJ</label>
-                        <input id="cpfcnpj" name ="cpfcnpj"   MAXLENGTH="18"  onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)" class = "form-control" required type = "text" value = "<?= set_value('cpfcnpj') ?>">
-                        <?= form_error('cpfcnpj'); ?>
-
+                    <label for = "selTipoDocumento">Tipo de Documento</label>
+                    <p>
+                        <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
+                            value="cpfCnpj" ng-model="docType" ng-change="docByType(docType)"
+                            ng-checked="docType == 'cpfCnpj'"
+                            ng-init="docType = '<?= set_value('selTipoDocumento') ?>'">&nbsp;CPF/CNPJ
+                        &nbsp;
+                        <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
+                            value="passaporte" ng-model="docType" ng-change="docByType(docType)"
+                            ng-checked="docType == 'passaporte'">&nbsp;Passaporte
+                        <?= form_error('selTipoDocumento'); ?>
+                    </p>
                 </div>
 
+            </div>
+
+            <div class="row" ng-if="docType=='cpfCnpj'">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+                    <label for = "cpfcnpj">CPF/CNPJ</label>
+                    <input type = "text" id="cpfcnpj" name ="cpfcnpj" maxlength="18" 
+                        onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)" 
+                        class="form-control" value="<?= set_value('cpfcnpj') ?>" ng-required="docType == 'cpfCnpj'">
+                    <?= form_error('cpfcnpj'); ?>
+                </div>
+            </div>
+
+            <div class="row" ng-if="docType=='passaporte'">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+                    <label for = "passaporte">Passaporte</label>
+                    <input type="text" id="passaporte" name ="passaporte" maxlength="8"
+                        class="form-control" value="<?= set_value('passaporte') ?>" ng-required="docType == 'passaporte'">
+                    <?= form_error('passaporte'); ?>
+                </div>
             </div>
 
 

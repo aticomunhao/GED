@@ -48,23 +48,20 @@
 
                 <div class="col-md-12" ng-show="filteredItems > 0">
                     <table class="table table-striped table-bordered table-hover">
-
-
                         <thead>
                             <tr>
-                                <th>Nome <a ng-click="sort_by('nome');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-                                <th class="hidden-xs"> CPF/CNPJ<a ng-click="sort_by('cpf');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-                                <th class="hidden-xs"> Telefone<a ng-click="sort_by('telefone');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-                                <th class="hidden-xs"> Cidade<a ng-click="sort_by('nomeCidade');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-                                <th class="hidden-xs"> Estado<a ng-click="sort_by('sigla');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-                                <th class="hidden-xs"> Resposável<a ng-click="sort_by('responsavel');"> <i class="glyphicon glyphicon-sort"></i></a></th>
-
-                                <th>Ações</th>
+                                <th style="white-space: nowrap;">Nome <a ng-click="sort_by('nome');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> CPF/CNPJ<a ng-click="sort_by('cpf');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> Passaporte<a ng-click="sort_by('passaporte');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> Telefone<a ng-click="sort_by('telefone');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> Cidade<a ng-click="sort_by('nomeCidade');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> Estado<a ng-click="sort_by('sigla');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;" class="hidden-xs"> Resposável<a ng-click="sort_by('responsavel');"> <i class="glyphicon glyphicon-sort"></i></a></th>
+                                <th style="white-space: nowrap;">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="usuario in filtered = (list| accentInsensitiveFilter:search | orderBy : predicate :reverse) | startFrom:(currentPage - 1) * entryLimit | limitTo:entryLimit" >
-
                                 <td><a class="tooltipUsuario" 
                                        href="<?= base_url('usuario/editar') ?>/{{usuario.id}}"
                                        data-toggle="tooltip" 
@@ -73,25 +70,21 @@
                                         {{usuario.nome.toUpperCase()}}
                                     </a>
                                 </td>
-
-
-                                <td class="hidden-xs">{{usuario.cpf}}</td>
-                                <td class="hidden-xs">{{usuario.telefone}}</td>
+                                <td style="white-space: nowrap;" class="hidden-xs">{{usuario.cpf}}</td>
+                                <td class="hidden-xs">{{usuario.passaporte}}</td>
+                                <td style="white-space: nowrap;" class="hidden-xs">{{usuario.telefone}}</td>
                                 <td class="hidden-xs">{{usuario.nomeCidade.toUpperCase()}}</td>
                                 <td class="hidden-xs">{{usuario.sigla.toUpperCase()}}</td>
                                 <td class="hidden-xs">{{usuario.responsavel.toUpperCase()}}</td>
-
-                                <td>
+                                <td style="white-space: nowrap;">
                                     <a href="<?= base_url('usuario/editar') ?>/{{usuario.id}}" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><img class="imagemIcons" src="<?= base_url('assets/img/document_edit.png') ?>"</a>
                                     <a href="<?= base_url('usuario/historico') ?>/{{usuario.id}}" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Histórico" target="_blank"><img class="imagemIcons" src="<?= base_url('assets/img/mi_scare_report.png') ?>"</a>
-
                                     <?php if ($this->session->userdata('tipoVoluntario') == 1) { ?>
                                         <a href="#" ng-click="deletarUsuario(usuario)" class="tooltipUsuario" data-toggle="tooltip" data-placement="top" data-original-title="Excluir"><img class="imagemIcons" src="<?= base_url('assets/img/recyclebin.png') ?>"</a>
 
                                         <?php
                                     }
                                     ?>
-
                                 </td>
                             </tr>
                         </tbody>

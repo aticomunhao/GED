@@ -153,6 +153,8 @@
             });
         }
       };
+
+      $scope.docType = "cpfCnpj";
     },
   ]);
 })(angular);
