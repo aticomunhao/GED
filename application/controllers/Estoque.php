@@ -84,13 +84,22 @@ class Estoque extends CI_Controller
                 'field' => 'quantidadeR',
                 'label' => 'Quantidade',
                 'rules' => 'trim|required|greater_than[0]'
-            ),
-            array(
+            )
+        );
+
+        if ($this->input->post('selTipoDocumento') == 'passaporte') {
+            array_push($config, array(
+                'field' => 'passaporteRetirada',
+                'label' => 'Passaporte',
+                'rules' => 'trim|required|min_length[5]|max_length[8]'
+            ));
+        } else {
+            array_push($config, array(
                 'field' => 'cpfcnpjRetirada',
                 'label' => 'CPF/CNPJ do Usuário',
                 'rules' => 'required|validaCPFCNPJ'
-            )
-        );
+            ));
+        }
 
 
         $this->form_validation->set_rules($config);
@@ -118,16 +127,16 @@ class Estoque extends CI_Controller
             $this->load->model('produto_model', 'produto');
             $quantidadeDisponivel = $this->estoque->checaQuantidadeProdutoDisponivel($idProduto);
 
-                        if ($quantidade > $quantidadeDisponivel) {
+            if ($quantidade > $quantidadeDisponivel) {
                 $retorno = 14;
                 $this->mensagens->defineMesagens($retorno);
                 redirect('sistema/inicio');
             } else {
 
-                                $this->load->model('datas_model', 'data');
+                $this->load->model('datas_model', 'data');
                 $data_hora = $this->data->obterDateTime();
 
-                                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario, $data_hora);
+                $retorno = $this->estoque->inserirRetirada($idProduto, $quantidade, $obs, $idUsuario, $data_hora);
                 $this->load->view('template/html.php');
                 $this->load->view('template/header.php');
                 $this->load->view('template/navbar.php');
