@@ -17,7 +17,7 @@
                         <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
                             value="cpfCnpj" ng-model="docType" ng-change="docByType(docType)"
                             ng-checked="docType == 'cpfCnpj'"
-                            ng-init="docType = '<?=  $usuario->cpf ? 'cpfCnpj' : 'passaporte'  ?>'">&nbsp;CPF/CNPJ
+                            ng-init="docType = '<?=  set_value('selTipoDocumento') ? set_value('selTipoDocumento') : ($usuario->cpf ? 'cpfCnpj' : 'passaporte')  ?>'">&nbsp;CPF/CNPJ
                         &nbsp;
                         <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
                             value="passaporte" ng-model="docType" ng-change="docByType(docType)"
@@ -127,7 +127,5 @@
         </fieldset>
 
     </form>
-
-
 
 </div>

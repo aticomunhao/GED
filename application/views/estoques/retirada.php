@@ -6,25 +6,53 @@
 
             <?php if ($this->session->flashdata('erro')): ?>
                 <div class="alert alert-danger text-center" role="alert"><?= $this->session->flashdata('erro'); ?></div>
-            <?php endif;
-            ?>
-
-
+            <?php endif; ?>
 
             <div class="row">
                 <div class="col-xs-12 col-md-8">
 
                     <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                            <label for = "selTipoDocumento">Escolha o tipo de documento para retirada</label>
+                            <p>
+                                <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
+                                    value="cpfCnpj" ng-model="docType" ng-change="docByType(docType)"
+                                    ng-checked="docType == 'cpfCnpj'" required
+                                    ng-init="docType = '<?= set_value('selTipoDocumento') ?>'">&nbsp;CPF/CNPJ
+                                &nbsp;
+                                <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
+                                    value="passaporte" ng-model="docType" ng-change="docByType(docType)"
+                                    ng-checked="docType == 'passaporte'">&nbsp;Passaporte
+                                <?= form_error('selTipoDocumento'); ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="docType=='cpfCnpj'">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
                                 <label for="cpfcnpjRetirada">CPF/CNPJ do Usuário</label>
-                                <input id="cpfcnpjRetirada" name="cpfcnpjRetirada" MAXLENGTH="18" onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)" class="form-control" required type="text" value="<?= set_value('cpfcnpjRetirada'); ?>">
+                                <input id="cpfcnpjRetirada" name="cpfcnpjRetirada" maxlength="18" 
+                                    onkeypress="mascaraMutuario(this,cpfCnpj)" onblur="mascaraMutuario(this,cpfCnpj)" 
+                                    class="form-control" type="text" value="<?= set_value('cpfcnpjRetirada'); ?>"
+                                    ng-required="docType == 'cpfCnpj'">
                                 <?= form_error('cpfcnpjRetirada'); ?>
                             </div>
 
                         </div>
                     </div>
-                    <div class="row">
+
+                    <div class="row" ng-show="docType=='passaporte'">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+                            <label for="passaporteRetirada">Passaporte</label>
+                            <input type="text" id="passaporteRetirada" name="passaporteRetirada" maxlength="8"
+                                class="form-control" value="<?= set_value('passaporteRetirada') ?>" 
+                                ng-required="docType == 'passaporte'">
+                            <?= form_error('passaporteRetirada'); ?>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
 
@@ -42,7 +70,7 @@
 
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-if="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
                                 <label for="quantidadeR">Quantidade</label>
@@ -55,7 +83,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                                 <label for="obs">Observações: </label>
@@ -65,8 +93,6 @@
                             </div>
                         </div>
                     </div>
-
-
 
                 </div>
                 <div class="col-xs-6 col-md-4">
@@ -78,14 +104,12 @@
 
                     </div>
 
-
-
                 </div>
             </div>
 
             <input type="hidden" id="identUsuario" name="identUsuario">
 
-            <div class="pull-right">
+            <div class="pull-right" ng-if="docType">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>
                 <a href="<?= base_url('sistema/inicio') ?>" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
 

@@ -11,12 +11,12 @@
 
             <div class="row">
 
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
-                    <label for = "selTipoDocumento">Tipo de Documento</label>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                    <label for = "selTipoDocumento">Ecolha o tipo de documento para cadastrar</label>
                     <p>
                         <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
                             value="cpfCnpj" ng-model="docType" ng-change="docByType(docType)"
-                            ng-checked="docType == 'cpfCnpj'"
+                            ng-checked="docType == 'cpfCnpj'" required
                             ng-init="docType = '<?= set_value('selTipoDocumento') ?>'">&nbsp;CPF/CNPJ
                         &nbsp;
                         <input type="radio" id="selTipoDocumentoCpfCnpj" name="selTipoDocumento" 
@@ -47,8 +47,7 @@
                 </div>
             </div>
 
-
-            <div class="row">
+            <div class="row" ng-if="docType">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <label for = "nome">Nome do Usuário / Empresa</label>
@@ -70,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-if="docType">
                 <div class="form-group">
 
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
@@ -80,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-if="docType">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <label for = "cep">CEP</label>
@@ -120,9 +119,7 @@
                 </div>
             </div>
 
-
-
-            <div class="pull-right">
+            <div class="pull-right" ng-if="docType">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>
                 <a href="<?= base_url('usuario/listar') ?>" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
 
