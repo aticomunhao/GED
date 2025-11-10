@@ -38,11 +38,6 @@ class Usuario extends CI_Controller {
                 'rules' => 'trim|min_length[5]'
             ),
             array(
-                'field' => 'cpfcnpj',
-                'label' => 'CPF/CNPJ',
-                'rules' => 'required|validaCPFCNPJ'
-            ),
-            array(
                 'field' => 'selEstado',
                 'label' => 'Estado',
                 'rules' => 'required|estado'
@@ -54,6 +49,19 @@ class Usuario extends CI_Controller {
             )
         );
 
+        if ($this->input->post('selTipoDocumento') == 'passaporte') {
+            array_push($config, array(
+                'field' => 'passaporte',
+                'label' => 'Passaporte',
+                'rules' => 'trim|required|min_length[5]|max_length[8]'
+            ));
+        } else {
+            array_push($config, array(
+                'field' => 'cpfcnpj',
+                'label' => 'CPF/CNPJ',
+                'rules' => 'required|validaCPFCNPJ'
+            ));
+        }
 
         $this->form_validation->set_rules($config);
         $this->form_validation->set_error_delimiters('<div><p class="text-danger">', '</p></div>');
@@ -78,16 +86,22 @@ class Usuario extends CI_Controller {
             $this->load->view('template/footer.php');
         } else {
 
-            $nomeResponsavel = $this->input->post('responsavel');
-            $nome = $this->input->post('nome');
-            $cpfcnpj = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
-            $selCidade = $this->input->post('selCidade');
-            $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $observacoes = $this->input->post('observacoes');
-            $endereco['cep'] = $this->input->post('cep');
-            $endereco['endereco'] = $this->input->post('endereco');
-            $endereco['bairro'] = $this->input->post('bairro');
-            $retorno = $this->usuario->inserir($nome, $cpfcnpj, $selCidade, $telefone,$nomeResponsavel, $observacoes, $endereco);
+            //echo "<pre>";var_dump($this->input->post('selTipoDocumento'));var_dump($this->input);die;
+
+            $dataInsert = array(
+                "nome" => $this->input->post('nome'),
+                "cpfcnpj" => preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES)),
+                "passaporte" => $this->input->post('passaporte'),
+                "selCidade" => $this->input->post('selCidade'),
+                "telefone" => preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES)),
+                "nomeResponsavel" => $this->input->post('responsavel'),
+                "observacoes" => $this->input->post('observacoes'),
+                "cep" => $this->input->post('cep'),
+                "endereco" => $this->input->post('endereco'),
+                "bairro" => $this->input->post('bairro')
+            );
+
+            $retorno = $this->usuario->inserir($dataInsert);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 
@@ -109,11 +123,6 @@ class Usuario extends CI_Controller {
                 'rules' => 'trim|min_length[5]'
             ),
             array(
-                'field' => 'cpfcnpj',
-                'label' => 'CPF/CNPJ',
-                'rules' => 'required|validaCPFCNPJ'
-            ),
-            array(
                 'field' => 'selEstado',
                 'label' => 'Estado',
                 'rules' => 'required|estado'
@@ -125,6 +134,19 @@ class Usuario extends CI_Controller {
             )
         );
 
+        if ($this->input->post('selTipoDocumento') == 'passaporte') {
+            array_push($config, array(
+                'field' => 'passaporte',
+                'label' => 'Passaporte',
+                'rules' => 'trim|required|min_length[5]|max_length[8]'
+            ));
+        } else {
+            array_push($config, array(
+                'field' => 'cpfcnpj',
+                'label' => 'CPF/CNPJ',
+                'rules' => 'required|validaCPFCNPJ'
+            ));
+        }
 
         $this->form_validation->set_rules($config);
         $this->form_validation->set_error_delimiters('<div><p class="text-danger">', '</p></div>');
@@ -144,16 +166,20 @@ class Usuario extends CI_Controller {
             $this->load->view('template/footer.php');
         } else {
 
-            $nomeResponsavel = $this->input->post('responsavel');
-            $nome = $this->input->post('nome');
-            $cpf = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES));
-            $selCidade = $this->input->post('selCidade');
-            $telefone = preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES));
-            $observacoes = $this->input->post('observacoes');
-            $endereco['cep'] = $this->input->post('cep');
-            $endereco['endereco'] = $this->input->post('endereco');
-            $endereco['bairro'] = $this->input->post('bairro');
-            $retorno = $this->usuario->atualizar($nome, $cpf, $selCidade, $telefone, $id,$nomeResponsavel, $observacoes, $endereco);
+            $dataUpdate = array(
+                "nome" => $this->input->post('nome'),
+                "cpfcnpj" => preg_replace("/[^0-9]/", "", htmlentities($this->input->post('cpfcnpj'), ENT_QUOTES)),
+                "passaporte" => $this->input->post('passaporte'),
+                "selCidade" => $this->input->post('selCidade'),
+                "telefone" => preg_replace("/[^0-9]/", "", htmlentities($this->input->post('telefone'), ENT_QUOTES)),
+                "nomeResponsavel" => $this->input->post('responsavel'),
+                "observacoes" => $this->input->post('observacoes'),
+                "cep" => $this->input->post('cep'),
+                "endereco" => $this->input->post('endereco'),
+                "bairro" => $this->input->post('bairro')
+            );
+
+            $retorno = $this->usuario->atualizar($dataUpdate, $id);
             $this->load->model('mensagens_model', 'mensagens');
             $this->mensagens->defineMesagens($retorno);
 

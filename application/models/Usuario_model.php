@@ -54,23 +54,29 @@ class Usuario_model extends CI_Model {
         }
     }
 
-    public function inserir($nome, $cpf, $selCidade,$telefone,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
+    public function inserir($dataInsert) {
 
-        if ($this->bolChecaCpfCadastrado($cpf, NULL)) {
+        if ($this->bolChecaCpfCadastrado($dataInsert['cpfcnpj'], NULL)) {
             return 8;
         }
+
+        if ($dataInsert['passaporte']) {
+            $dataInsert['cpfcnpj'] = null;
+        }
+
         $dados = array(
-            "nome" => $nome,
-            "cpf" => $cpf,
-            "cod_cidades" => $selCidade,
-            "telefone" => $telefone,
+            "nome" => $dataInsert['nome'],
+            "cpf" => $dataInsert['cpfcnpj'],
+            "passaporte" => $dataInsert['passaporte'],
+            "cod_cidades" => $dataInsert['selCidade'],
+            "telefone" => $dataInsert['telefone'],
             "id_voluntario_cadastro" => $this->session->userdata('id'),
             "data_cadastro" => $this->data->obterDateTime(),
-            "responsavel" => $nomeResponsavel,
-            "observacoes" => $observacoes,
-            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
-            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
-            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
+            "responsavel" => $dataInsert['nomeResponsavel'],
+            "observacoes" => $dataInsert['observacoes'],
+            "cep" => $dataInsert['cep'],
+            "endereco" => $dataInsert['endereco'],
+            "bairro" => $dataInsert['bairro']
         );
 
         $this->db->trans_start();
@@ -119,22 +125,44 @@ class Usuario_model extends CI_Model {
         return $this->db->query("SELECT *  FROM  v_usuarios where id=$id");
     }
 
-    public function atualizar($nome, $cpf, $selCidade,$telefone,$id,$nomeResponsavel, $observacoes = NULL, $endereco = NULL) {
+    public function buscarCidadePorId($id) {
+        return $this->db->query("SELECT 
+                                    c.nome, 
+                                    e.sigla
+                                FROM cidades c
+                                JOIN estados e ON e.cod_estados = c.estados_cod_estados
+                                where c.cod_cidades=$id");
+    }
 
-        if ($this->bolChecaCpfCadastrado($cpf, NULL, $id)) {
+    public function buscarEstadoPorId($id) {
+        return $this->db->query("SELECT 
+                                    e.sigla
+                                FROM estados e 
+                                where e.cod_estados=$id");
+    }
+
+    public function atualizar($dataUpdate, $id) {
+
+        if ($this->bolChecaCpfCadastrado($dataUpdate['cpfcnpj'], NULL, $id)) {
             return 8;
         }
+
+        if ($dataUpdate['passaporte']) {
+            $dataUpdate['cpfcnpj'] = null;
+        }
+
         $dados = array(
-            "nome" => $nome,
-            "cpf" => $cpf,
-            "cod_cidades" => $selCidade,
-            "telefone" => $telefone,
+            "nome" => $dataUpdate['nome'],
+            "cpf" => $dataUpdate['cpfcnpj'],
+            "passaporte" => $dataUpdate['passaporte'],
+            "cod_cidades" => $dataUpdate['selCidade'],
+            "telefone" => $dataUpdate['telefone'],
             "id_voluntario_cadastro" => $this->session->userdata('id'),
-            "responsavel" => $nomeResponsavel,
-            "observacoes" => $observacoes,
-            "cep" => isset($endereco['cep']) ? $endereco['cep'] : NULL,
-            "endereco" => isset($endereco['endereco']) ? $endereco['endereco'] : NULL,
-            "bairro" => isset($endereco['bairro']) ? $endereco['bairro'] : NULL
+            "responsavel" => $dataUpdate['nomeResponsavel'],
+            "observacoes" => $dataUpdate['observacoes'],
+            "cep" => $dataUpdate['cep'],
+            "endereco" => $dataUpdate['endereco'],
+            "bairro" => $dataUpdate['bairro']
         );
 
         $this->db->trans_start();

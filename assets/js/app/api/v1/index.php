@@ -94,17 +94,18 @@ $app->get('/voluntarios', function() {
 
 $app->get('/usuarios', function() {
     global $db;
-    $rows = $db->select("v_usuarios", "*", array('status' => 'A'), "ORDER BY nome ASC");
+    $rows = $db->select("v_usuarios", "*", array('status' => 'A'/*, 'nome' => 'BELTRANO DE TAL'*/), "ORDER BY nome ASC");
     $lista = array();
 
 
     foreach ($rows["data"] as $row) {
 
-        if(strlen($row["cpf"]) <= 11 ) {
+        $num = "";
+        if($row["cpf"] && strlen($row["cpf"]) <= 11 ) {
             $num = Mask("###.###.###-##", $row["cpf"]);
-        }else{
+        }
+        if(strlen($row["cpf"]) > 11) {
             $num = Mask("##.###.###/####-##", $row["cpf"]);
-
         }
 
         $usuario = array(); // temp array
@@ -113,14 +114,13 @@ $app->get('/usuarios', function() {
         $usuario["telefone"] = Telefone($row["telefone"]);
         $usuario["cidade"] = $row["cod_cidades"];
         $usuario["cpf"] = $num;
+        $usuario["passaporte"] = $row["passaporte"];
         $usuario["idCadastro"] = $row["id_voluntario_cadastro"];
         $usuario["status"] = $row["status"];
         $usuario["nomeCidade"] = $row["nomeCidade"];
         $usuario["sigla"] = $row["sigla"];
         $usuario["nomeEstado"] = $row["nomeEstado"];
         $usuario["responsavel"] = strtoupper($row["responsavel"]);
-
-
 
         array_push($lista, $usuario);
     }
@@ -131,6 +131,9 @@ $app->get('/usuarios', function() {
 $app->get('/usuariocpf', function() {
 	global $db;
     $rows = $db->select("v_usuarios", "*", array('cpf' =>preg_replace("/[^0-9]/", "", $_GET['cpf'])), "ORDER BY nome ASC");
+    if (!$rows["data"]) {
+        $rows = $db->select("v_usuarios", "*", array('passaporte' => $_GET['cpf']), "ORDER BY nome ASC");
+    }    
 	$dataFormatada   = "Não houve retirada anteriormente" ;
     $qtde = $tempo=0;
     $id = null;
@@ -143,10 +146,9 @@ $app->get('/usuariocpf', function() {
     if($id){
         $retirada = $db->select("v_retiradas", "*", array('id_usuario' => $id), "ORDER BY data_saida DESC");
 
-
         foreach ($retirada["data"] as $row) {
 
-            if($flags){
+            if($flags){                
                 $data = new DateTime($row["data_saida"]);
                 $dataFormatada = $data->format("d/m/Y H:i:s");
                 $qtde = $row["qtde"];
@@ -156,6 +158,7 @@ $app->get('/usuariocpf', function() {
                 $flags = false;
                 array_push($arrRetiradas,array("data"=>$dataFormatada,"qtde"=>$qtde,"nome"=>$produto,"tempo"=>$tempo));
             }else{
+                
                 $data2 = new DateTime($row["data_saida"]);
                 $dataFormatada2 = $data2->format("d/m/Y H:i:s");
                 $qtde2 = $row["qtde"];
@@ -164,21 +167,19 @@ $app->get('/usuariocpf', function() {
                 $flags = false;
                 array_push($arrRetiradas,array("data"=>$dataFormatada2,"qtde"=>$qtde2,"nome"=>$produto2,"tempo"=>$tempo2));
             }
-
         }
-
-
     }
 
     $lista = array();
 
     foreach ($rows["data"] as $row) {
 
+        $num = "";
         if(strlen($row["cpf"]) <= 11 ) {
             $num = Mask("###.###.###-##", $row["cpf"]);
-        }else{
+        }
+        if(strlen($row["cpf"]) > 11 ) {
             $num = Mask("##.###.###/####-##", $row["cpf"]);
-
         }
 
         $usuario = array(); // temp array
@@ -202,12 +203,8 @@ $app->get('/usuariocpf', function() {
         $usuario["responsavel"] = strtoupper($row["responsavel"]);
         $usuario["tempo"] = $tempo;
 
-
-
-
         array_push($lista, $usuario);
     }
-
 
     echoResponse(200, $lista);
 });

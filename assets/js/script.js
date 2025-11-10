@@ -55,7 +55,7 @@ $(document).ready(function () {
   });
 
   $(function () {
-    $("#cpfcnpjRetirada").on("blur", function () {
+    $("#cpfcnpjRetirada, #passaporteRetirada").on("blur", function () {
       var num = limpa(this.value);
       var serviceBase = "/assets/js/app/api/v1";
 
@@ -77,19 +77,30 @@ $(document).ready(function () {
               for (var prop in data) {
                 var caminhoFigura = "/assets/img/plus.png";
 
-                const dataRetiradaFormatada = moment(
-                  data[prop].dataRetirada,
-                  "DD/MM/YYYY HH:mm:ss"
-                );
+                let dataRetiradaFormatada;
+
+                if (
+                  data[prop].dataRetirada.includes("retirada anteriormente")
+                ) {
+                  dataRetiradaFormatada = data[prop].dataRetirada;
+                } else {
+                  dataRetiradaFormatada = moment(
+                    data[prop].dataRetirada,
+                    "DD/MM/YYYY HH:mm:ss"
+                  );
+                  dataRetiradaFormatada = dataRetiradaFormatada.fromNow();
+                }
 
                 $(".informacoes")
                   .show()
                   .html(
-                    "\
+                    '\
                                 <h2>\
-                                <input name=\"id_usuario\" type=\"hidden\" value=\"" + data[prop].id + "\"\ />\
+                                <input name="id_usuario" type="hidden" value="' +
+                      data[prop].id +
+                      '" />\
                                     <strong>Dados do Usuário</strong></h2>\n\
-                                    <strong>Nome: </strong>" +
+                                    <strong>Nome: </strong>' +
                       data[prop].nome +
                       "<br>\n\
                                     <strong>Cidade/Estado: \n\
@@ -124,7 +135,7 @@ $(document).ready(function () {
                       data[prop].nomeProduto +
                       " <br>\
                                     <strong>Retirada:  </strong>  " +
-                      dataRetiradaFormatada.fromNow() +
+                      dataRetiradaFormatada +
                       " <br>"
                   );
                 var tabela =

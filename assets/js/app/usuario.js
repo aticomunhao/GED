@@ -36,7 +36,11 @@
       };
       var normalizedSearch = normalize(search);
       return $filter("filter")(array, function (item) {
-        return normalize(JSON.stringify(item)).indexOf(normalizedSearch) !== -1;
+        return (
+          normalize(JSON.stringify(Object.values(item))).indexOf(
+            normalizedSearch
+          ) !== -1
+        );
       });
     };
   });
@@ -57,6 +61,7 @@
       $scope.entryLimit = 20; //max no of items to display in a page
 
       $scope.listar = true;
+      $scope.docType = "cpfCnpj";
 
       $scope.usuario = {};
       $scope.setPage = function (pageNo) {
