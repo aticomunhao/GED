@@ -28,7 +28,7 @@
 
             </div>
 
-            <div class="row" ng-if="docType=='cpfCnpj'">
+            <div class="row" ng-show="docType=='cpfCnpj'">
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
                     <label for = "cpfcnpj">CPF/CNPJ</label>
                     <input type = "text" id="cpfcnpj" name ="cpfcnpj" maxlength="18" 
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="row" ng-if="docType=='passaporte'">
+            <div class="row" ng-show="docType=='passaporte'">
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
                     <label for = "passaporte">Passaporte</label>
                     <input type="text" id="passaporte" name ="passaporte" maxlength="8"
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="row" ng-if="docType">
+            <div class="row" ng-show="docType">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <label for = "nome">Nome do Usuário / Empresa</label>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="docType">
+            <div class="row" ng-show="docType">
                 <div class="form-group">
 
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="docType">
+            <div class="row" ng-show="docType">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                         <label for = "cep">CEP</label>
@@ -119,7 +119,7 @@
                 </div>
             </div>
 
-            <div class="pull-right" ng-if="docType">
+            <div class="pull-right" ng-show="docType">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>
                 <a href="<?= base_url('usuario/listar') ?>" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
 

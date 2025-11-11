@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="docType">
+                    <div class="row" ng-show="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
 
@@ -70,7 +70,7 @@
 
                         </div>
                     </div>
-                    <div class="row" ng-if="docType">
+                    <div class="row" ng-show="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
                                 <label for="quantidadeR">Quantidade</label>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="docType">
+                    <div class="row" ng-show="docType">
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
                                 <label for="obs">Observações: </label>
@@ -109,7 +109,7 @@
 
             <input type="hidden" id="identUsuario" name="identUsuario">
 
-            <div class="pull-right" ng-if="docType">
+            <div class="pull-right" ng-show="docType">
                 <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> GRAVAR</button>
                 <a href="<?= base_url('sistema/inicio') ?>" class="btn btn-danger"> <span class="glyphicon glyphicon-remove"></span> CANCELAR</a>
 
